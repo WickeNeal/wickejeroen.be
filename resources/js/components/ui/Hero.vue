@@ -1,8 +1,8 @@
-<script setup>
-// This is the animated text component from vue-bits you wanted.
-// Make sure the path is correct for your jsrepo setup.
-import SplitText from '../../../TextAnimations/SplitText/SplitText.vue';
+<script setup lang="ts"> // <-- FIX 1: Added lang="ts"
+// FIX 2: Corrected the import path
+import SplitText from '../../TextAnimations/SplitText/SplitText.vue';
 
+// This path will be fixed in the next step
 const heroBgUrl = '/images/hero-bg.jpg';
 </script>
 
@@ -17,8 +17,8 @@ const heroBgUrl = '/images/hero-bg.jpg';
             <div class="absolute inset-0 z-10 bg-black/50 backdrop-brightness-75" />
         </div>
 
-        <div class="relative z-20 max-w-2xl rounded-lg bg-white p-8 text-black shadow-2xl md:p-12">
-            
+        <div class="relative z-20 max-w-2xl rounded-lg bg-card p-8 text-card-foreground shadow-2xl md:p-12">
+
             <SplitText
                 class="mb-6"
                 :from="{ opacity: 0, y: 30 }"
@@ -30,7 +30,7 @@ const heroBgUrl = '/images/hero-bg.jpg';
                     Wie We Zijn
                 </h1>
             </SplitText>
-            
+
             <p class="text-lg leading-relaxed text-gray-700">
                 Met meer dan 15 jaar ervaring in de bouwsector staan we garant voor
                 kwaliteit en betrouwbaarheid. Onze missie? Uw visie omzetten in realiteit,
