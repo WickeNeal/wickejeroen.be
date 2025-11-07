@@ -1,7 +1,8 @@
-<script setup>
-import { Link } from '@inertiajs/vue3';
-// Make sure you've added this logo to public/images/logo-beige.png
-const logoUrl = '/images/logo-beige.png';
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3'
+
+// This path will now work because you just added the image
+const logoUrl = '/images/logo-beige.png'
 </script>
 
 <template>
@@ -10,7 +11,7 @@ const logoUrl = '/images/logo-beige.png';
             <Link href="/">
                 <img :src="logoUrl" alt="Jeroen Wicke Logo" class="h-10 w-auto" />
             </Link>
-Ne
+
             <div class="hidden items-center space-x-8 md:flex">
                 <a href="#diensten"
                    class="text-foreground/70 transition-colors hover:text-foreground">

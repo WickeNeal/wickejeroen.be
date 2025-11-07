@@ -1,8 +1,83 @@
-@import 'tailwindcss';
+/* 1. Import all of Tailwind's base styles. */
+@import "tailwindcss";
 
+/* 2. Keep these lines. They tell Tailwind to scan Blade files. */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-@theme inline {
-    --font-sans: Instrument Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+/* 3. This block defines all our theme colors and variables. This was missing. */
+@theme {
+    /* This is the default (light) theme. */
+    :root {
+        --font-sans: Instrument Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+        --background: hsl(0 0% 100%);
+        --foreground: hsl(0 0% 3.9%);
+        --card: hsl(0 0% 100%);
+        --card-foreground: hsl(0 0% 3.9%);
+        --popover: hsl(0 0% 100%);
+        --popover-foreground: hsl(0 0% 3.9%);
+        --primary: hsl(240 100% 50%); /* jw-blue */
+        --primary-foreground: hsl(0 0% 100%); /* white */
+        --secondary: hsl(0 0% 96.1%);
+        --secondary-foreground: hsl(0 0% 9%);
+        --muted: hsl(0 0% 96.1%);
+        --muted-foreground: hsl(0 0% 45.1%);
+        --accent: hsl(0 0% 96.1%);
+        --accent-foreground: hsl(0 0% 9%);
+        --destructive: hsl(0 84.2% 60.2%);
+        --destructive-foreground: hsl(0 0% 98%);
+        --border: hsl(0 0% 89.8%);
+        --input: hsl(0 0% 89.8%);
+        --ring: hsl(240 100% 50%); /* jw-blue */
+        --radius: 0.5rem;
+    }
+
+    /* THIS IS OUR THEME. This block applies our dark colors. */
+    .dark {
+        /* Main background and text */
+        --background: hsl(0 0% 10%);          /* Our jw-dark (#1A1A1A) */
+        --foreground: hsl(50 27% 92%);        /* Our jw-beige (#EAE7DC) */
+
+        /* Card (for hero box) - We make this white */
+        --card: hsl(0 0% 100%);               /* White */
+        --card-foreground: hsl(0 0% 3.9%);    /* Black */
+
+        --popover: hsl(0 0% 10%);
+        --popover-foreground: hsl(50 27% 92%);
+
+        /* Primary color (buttons) */
+        --primary: hsl(240 100% 50%);         /* Our jw-blue (#0000FF) */
+        --primary-foreground: hsl(0 0% 100%); /* white */
+
+        /* Secondary (subtle backgrounds) */
+        --secondary: hsl(0 0% 15%);           /* A bit lighter than bg */
+        --secondary-foreground: hsl(50 27% 92%); /* jw-beige */
+
+        --muted: hsl(0 0% 12%);
+        --muted-foreground: hsl(50 27% 70%);  /* Dimmer jw-beige */
+
+        --accent: hsl(0 0% 15%);
+        --accent-foreground: hsl(50 27% 92%);
+
+        --destructive: hsl(0 84.2% 60.2%);    /* Default Red */
+        --destructive-foreground: hsl(0 0% 98%);
+
+        /* Borders & Inputs */
+        --border: hsl(50 27% 92% / 0.2);      /* jw-beige @ 20% opacity */
+        --input: hsl(50 27% 92% / 0.1);       /* jw-beige @ 10% opacity */
+        --ring: hsl(240 100% 50%);            /* jw-blue for focus */
+
+        --radius: 0.5rem;
+    }
+}
+
+/* 4. These base styles are needed for the theme to apply. */
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }
