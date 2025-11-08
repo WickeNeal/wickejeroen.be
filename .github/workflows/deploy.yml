@@ -41,7 +41,9 @@ jobs:
           php artisan key:generate
           touch database/database.sqlite
           php artisan migrate
-          php artisan config:clear
+          # Set production environment variables for GitHub Pages
+          echo "APP_ENV=production" >> .env
+          echo "APP_DEBUG=false" >> .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,13 +55,160 @@ jobs:
         run: npm install
 
       - name: Build frontend assets
+        env:
+          NODE_ENV: production
         run: npm run build
 
       - name: Prepare for Export
-        run: rm -f public/hot
+        run: |
+          # Ensure hot file is removed to force production asset usage
+          rm -f public/hot
+          # Set APP_URL to localhost for the export (export crawls local site, not live)
+          echo "APP_URL=http://localhost:8000" >> .env
+          # Clear config cache to ensure fresh environment variables are used
+          php artisan config:clear
+          # Verify manifest exists and show its contents
+          ls -la public/build/manifest.json
+          cat public/build/manifest.json
 
       - name: Export static site
-        run: php artisan export
+        run: |
+          # Start PHP built-in server in background for export to crawl
+          php -S localhost:8000 -t public > server.log 2>&1 &
+          SERVER_PID=$!
+          # Wait for server to be ready (check if port is listening)
+          echo "Waiting for server to start..."
+          for i in {1..10}; do
+            if php -r "echo @fsockopen('localhost', 8000) ? 'ready' : 'waiting';" 2>/dev/null | grep -q ready; then
+              echo "Server is ready!"
+              break
+            fi
+            sleep 1
+          done
+          # Give it an extra moment to fully initialize
+          sleep 2
+          # Run export (it will crawl localhost:8000)
+          php artisan export || (echo "Export failed. Server logs:" && cat server.log && exit 1)
+          # Stop the server
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Fix asset URLs in exported HTML
+        run: |
+          # Create a PHP script to fix asset URLs using the manifest
+          cat > fix-assets.php << 'EOF'
+          <?php
+          $manifestPath = __DIR__ . '/public/build/manifest.json';
+          $manifest = json_decode(file_get_contents($manifestPath), true);
+          
+          if (!$manifest) {
+              echo "ERROR: Could not read manifest.json\n";
+              exit(1);
+          }
+          
+          // Collect all CSS files (from all entries to avoid FOUC)
+          $allStyles = [];
+          $mainScript = null;
+          
+          foreach ($manifest as $key => $entry) {
+              // Main entry point (app.ts)
+              if (isset($entry['isEntry']) && $entry['isEntry']) {
+                  if (isset($entry['file'])) {
+                      $mainScript = $entry['file'];
+                  }
+                  if (isset($entry['css'])) {
+                      foreach ($entry['css'] as $css) {
+                          $allStyles[$css] = true;
+                      }
+                  }
+              }
+              // Also collect CSS from dynamic imports
+              if (isset($entry['css'])) {
+                  foreach ($entry['css'] as $css) {
+                      $allStyles[$css] = true;
+                  }
+              }
+          }
+          
+          // Find all HTML files in dist
+          $iterator = new RecursiveIteratorIterator(
+              new RecursiveDirectoryIterator(__DIR__ . '/dist'),
+              RecursiveIteratorIterator::LEAVES_ONLY
+          );
+          
+          foreach ($iterator as $file) {
+              if ($file->isFile() && $file->getExtension() === 'html') {
+                  $content = file_get_contents($file->getPathname());
+                  $originalContent = $content;
+                  
+                  // Remove all dev server script and link tags (localhost, 127.0.0.1)
+                  $content = preg_replace(
+                      '/<script[^>]*src="http:\/\/[^"]*"[^>]*><\/script>\s*/i',
+                      '',
+                      $content
+                  );
+                  $content = preg_replace(
+                      '/<link[^>]*href="http:\/\/[^"]*"[^>]*>\s*/i',
+                      '',
+                      $content
+                  );
+                  // Also remove any existing build asset tags (we'll add correct ones)
+                  $content = preg_replace(
+                      '/<script[^>]*src="[^"]*\/build\/[^"]*"[^>]*><\/script>\s*/i',
+                      '',
+                      $content
+                  );
+                  $content = preg_replace(
+                      '/<link[^>]*rel="stylesheet"[^>]*href="[^"]*\/build\/[^"]*"[^>]*>\s*/i',
+                      '',
+                      $content
+                  );
+                  
+                  // Build styles HTML
+                  $stylesHtml = '';
+                  foreach (array_keys($allStyles) as $css) {
+                      $stylesHtml .= '        <link rel="stylesheet" href="/wickejeroen.be/build/' . htmlspecialchars($css) . '">' . "\n";
+                  }
+                  
+                  // Build scripts HTML
+                  $scriptsHtml = '';
+                  if ($mainScript) {
+                      $scriptsHtml = '        <script type="module" src="/wickejeroen.be/build/' . htmlspecialchars($mainScript) . '"></script>' . "\n";
+                  }
+                  
+                  // Insert styles before </head>
+                  if (!empty($stylesHtml) && strpos($content, '</head>') !== false) {
+                      $content = str_replace('</head>', $stylesHtml . '        </head>', $content);
+                  }
+                  
+                  // Insert scripts before </body>
+                  if (!empty($scriptsHtml) && strpos($content, '</body>') !== false) {
+                      $content = str_replace('</body>', $scriptsHtml . '    </body>', $content);
+                  } elseif (!empty($scriptsHtml)) {
+                      // If no </body> tag, append before </html>
+                      $content = str_replace('</html>', $scriptsHtml . '</html>', $content);
+                  }
+                  
+                  if ($content !== $originalContent) {
+                      file_put_contents($file->getPathname(), $content);
+                      echo "Fixed: " . $file->getPathname() . "\n";
+                  }
+              }
+          }
+          echo "Asset URL fixing complete.\n";
+          EOF
+          php fix-assets.php
+          
+      - name: Verify exported HTML
+        run: |
+          # Check that no localhost URLs remain
+          if grep -r "localhost\|127.0.0.1" dist/*.html 2>/dev/null; then
+            echo "WARNING: HTML files may still contain localhost URLs"
+          else
+            echo "✓ No localhost URLs found in exported HTML"
+          fi
+          # Show a sample of the fixed HTML
+          echo "Sample of index.html:"
+          head -20 dist/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
