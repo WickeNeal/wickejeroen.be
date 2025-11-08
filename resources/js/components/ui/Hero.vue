@@ -1,6 +1,6 @@
 <script setup lang="ts"> // <-- FIX 1: Added lang="ts"
 // FIX 2: Corrected the import path
-import SplitText from '../../TextAnimations/SplitText/SplitText.vue';
+import SplitText from '../TextAnimations/SplitText/SplitText.vue';
 
 // This path will be fixed in the next step
 const heroBgUrl = '/images/hero-bg.jpg';
