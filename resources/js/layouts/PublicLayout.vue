@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 
 const activeSectionIndex = ref(0);
 

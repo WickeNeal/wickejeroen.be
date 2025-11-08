@@ -5,7 +5,6 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    base: '/wickejeroen.be/',
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
