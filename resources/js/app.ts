@@ -1,3 +1,12 @@
+// Handle GitHub Pages SPA redirect
+(function () {
+    const redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect !== location.href) {
+        history.replaceState(null, '', redirect);
+    }
+})();
+
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/vue3';
