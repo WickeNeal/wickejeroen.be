@@ -6,62 +6,61 @@
     :root {
         --font-sans: Instrument Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 240 100% 50%; /* jw-blue */
-        --primary-foreground: 0 0% 100%; /* white */
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 240 100% 50%; /* jw-blue */
+        --background: 60 56% 91%; /* #F5F5DC */
+        --foreground: 207 18% 26%; /* #36454F */
+        --card: 60 56% 91%; /* #F5F5DC */
+        --card-foreground: 207 18% 26%; /* #36454F */
+        --popover: 60 56% 91%; /* #F5F5DC */
+        --popover-foreground: 207 18% 26%; /* #36454F */
+        --primary: 36 44% 67%; /* #d4b280 */
+        --primary-foreground: 60 56% 91%; /* #F5F5DC */
+        --secondary: 60 56% 91%; /* #F5F5DC */
+        --secondary-foreground: 207 18% 26%; /* #36454F */
+        --muted: 60 56% 91%; /* #F5F5DC */
+        --muted-foreground: 207 18% 26%; /* #36454F */
+        --accent: 60 56% 91%; /* #F5F5DC */
+        --accent-foreground: 207 18% 26%; /* #36454F */
+        --destructive: 0 84.2% 60.2%; /* Default Red */
+        --destructive-foreground: 0 0% 98%; /* Default White */
+        --border: 207 18% 26%; /* #36454F */
+        --input: 207 18% 26%; /* #36454F */
+        --ring: 36 44% 67%; /* #d4b280 */
         --radius: 0.5rem;
     }
 
     .dark {
         /* Main background and text */
-        --background: 0 0% 10%;          /* Our jw-dark (#1A1A1A) */
-        --foreground: 50 27% 92%;        /* Our jw-beige (#EAE7DC) */
+        --background: 0 0% 10%; /* #1a1a1a */
+        --foreground: 60 56% 91%; /* #F5F5DC */
 
         /* Card (for hero box) - We make this white */
-        --card: 0 0% 100%;               /* White */
-        --card-foreground: 0 0% 3.9%;    /* Black */
+        --card: 0 0% 10%; /* #1a1a1a */
+        --card-foreground: 60 56% 91%; /* #F5F5DC */
 
-        --popover: 0 0% 10%;
-        --popover-foreground: 50 27% 92%;
+        --popover: 0 0% 10%; /* #1a1a1a */
+        --popover-foreground: 60 56% 91%; /* #F5F5DC */
 
         /* Primary color (buttons) */
-        --primary: 240 100% 50%;         /* Our jw-blue (#0000FF) */
-        --primary-foreground: 0 0% 100%; /* white */
+        --primary: 36 44% 67%; /* #d4b280 */
+        --primary-foreground: 0 0% 10%; /* #1a1a1a */
 
         /* Secondary (subtle backgrounds) */
-        --secondary: 0 0% 15%;           /* A bit lighter than bg */
-        --secondary-foreground: 50 27% 92%; /* jw-beige */
+        --secondary: 0 0% 10%; /* #1a1a1a */
+        --secondary-foreground: 60 56% 91%; /* #F5F5DC */
 
-        --muted: 0 0% 12%;
-        --muted-foreground: 50 27% 70%;  /* Dimmer jw-beige */
+        --muted: 0 0% 10%; /* #1a1a1a */
+        --muted-foreground: 60 56% 91%; /* #F5F5DC */
 
-        --accent: 0 0% 15%;
-        --accent-foreground: 50 27% 92%;
+        --accent: 0 0% 10%; /* #1a1a1a */
+        --accent-foreground: 60 56% 91%; /* #F5F5DC */
 
-        --destructive: 0 84.2% 60.2%;    /* Default Red */
-        --destructive-foreground: 0 0% 98%;
+        --destructive: 0 84.2% 60.2%; /* Default Red */
+        --destructive-foreground: 0 0% 98%; /* Default White */
 
         /* Borders & Inputs */
-        --border: 50 27% 92% / 0.2;      /* jw-beige @ 20% opacity */
-        --input: 50 27% 92% / 0.1;       /* jw-beige @ 10% opacity */
-        --ring: 240 100% 50%;            /* jw-blue for focus */
-
+        --border: 60 56% 91% / 0.2; /* #F5F5DC @ 20% opacity */
+        --input: 60 56% 91% / 0.1; /* #F5F5DC @ 10% opacity */
+        --ring: 36 44% 67%; /* #d4b280 */
         --radius: 0.5rem;
     }
 
@@ -71,5 +70,13 @@
     body {
         background-color: hsl(var(--background));
         color: hsl(var(--foreground));
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
     }
 }

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Jeroen Wicke - Quality Craftsmanship</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800;900&amp;family=Montserrat:wght@400;700&amp;family=Oswald:wght@700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4b280", // Warm Beige/Tan
+                        "background-light": "#F5F5DC", // Beige
+                        "background-dark": "#1a1a1a", // Near-black
+                        "text-light": "#36454F", // Charcoal on light bg
+                        "text-dark": "#F5F5DC", // Beige on dark bg
+                    },
+                    fontFamily: {
+                        "display": ["'Oswald'", "sans-serif"], // For headings
+                        "body": ["'Montserrat'", "sans-serif"], // For body text
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #d4b280;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #e1c194;
+    }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap bg-background-light/80 px-6 py-4 shadow-md backdrop-blur-sm dark:bg-background-dark/80 md:px-10 lg:px-20">
+        <div class="flex items-center gap-4">
+            <div class="h-8 w-8 text-primary">
+                <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_6_330)">
+                        <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill-rule="evenodd"></path>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_6_330">
+                            <rect fill="white" height="48" width="48"></rect>
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+            <h2 class="font-display text-2xl font-bold uppercase tracking-wider text-text-light dark:text-text-dark">Jeroen Wicke</h2>
+        </div>
+        <nav class="hidden items-center gap-8 md:flex">
+            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#">Home</a>
+            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#diensten">Diensten</a>
+            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#realisaties">Realisaties</a>
+            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#contact">Contact</a>
+        </nav>
+        <button class="md:hidden text-text-light dark:text-text-dark">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
+    </header>
+    <main class="flex-grow">
+        <section class="flex min-h-[calc(100vh-80px)] w-full flex-col lg:flex-row">
+            <div class="flex w-full flex-col items-start justify-center gap-6 p-6 text-left lg:w-1/2 lg:p-20">
+                <h1 class="font-display text-5xl font-bold uppercase leading-tight tracking-wide text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">
+                    Quality Craftsmanship, Lasting Results
+                </h1>
+                <p class="text-lg text-text-light/80 dark:text-text-dark/80">
+                    Welcome to Jeroen Wicke, where we bring your construction and renovation visions to life with precision and passion.
+                </p>
+                <button class="mt-4 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-text-light text-background-light transition-all hover:opacity-90 dark:bg-primary dark:text-background-dark dark:hover:opacity-90">
+                    <span class="font-display text-base font-bold uppercase tracking-wider">View Our Work</span>
+                </button>
+            </div>
+            <div class="relative h-96 w-full lg:h-auto lg:w-1/2">
+                <div class="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat" data-alt="A modern kitchen with clean lines and high-end appliances, a showcase of quality renovation work." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMBmRkHTNrtEu4TJbYQoBjgeWOv0hkAx_uR_cS87kLj8JlTSZfwF3jatf6ZW-MuwujV3V8CPFrESXdRABfIozyeB1KbWG1MnllXuIOg8UaEnPxNRSp3NCJWV--z4frhnGcNeNxRNFqmCUNnRWnmN3LwYATe2I83yuWXk1ntEGDZMqb1ORiN4DdY4TLo94JS1NbYUzRUy8uPVvprG5bIHwuaRRrtD2cahmR7r45tmfK8pJFuVAjD7j4YtNZRMtxUktpcQRbLzt5uX72");'></div>
+                <div class="absolute inset-0 bg-background-dark/20 dark:bg-background-dark/40"></div>
+            </div>
+        </section>
+        <section class="py-20 px-6 md:px-10 lg:px-20 bg-background-light dark:bg-background-dark" id="diensten">
+            <div class="mx-auto max-w-6xl">
+                <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Our Services</h2>
+                <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="group flex flex-col items-center gap-4 rounded-lg border border-text-light/10 p-6 text-center transition-all hover:border-primary/50 hover:bg-background-dark/5 dark:border-text-dark/10 dark:hover:bg-text-dark/5">
+                        <span class="material-symbols-outlined text-5xl text-primary">construction</span>
+                        <h3 class="font-display text-xl font-bold uppercase tracking-wide text-text-light dark:text-text-dark">Renovations</h3>
+                        <p class="text-sm text-text-light/80 dark:text-text-dark/80">Transforming existing spaces with modern updates and high-quality finishes.</p>
+                    </div>
+                    <div class="group flex flex-col items-center gap-4 rounded-lg border border-text-light/10 p-6 text-center transition-all hover:border-primary/50 hover:bg-background-dark/5 dark:border-text-dark/10 dark:hover:bg-text-dark/5">
+                        <span class="material-symbols-outlined text-5xl text-primary">foundation</span>
+                        <h3 class="font-display text-xl font-bold uppercase tracking-wide text-text-light dark:text-text-dark">New Construction</h3>
+                        <p class="text-sm text-text-light/80 dark:text-text-dark/80">Building your dream home from the ground up with expert planning and execution.</p>
+                    </div>
+                    <div class="group flex flex-col items-center gap-4 rounded-lg border border-text-light/10 p-6 text-center transition-all hover:border-primary/50 hover:bg-background-dark/5 dark:border-text-dark/10 dark:hover:bg-text-dark/5">
+                        <span class="material-symbols-outlined text-5xl text-primary">carpenter</span>
+                        <h3 class="font-display text-xl font-bold uppercase tracking-wide text-text-light dark:text-text-dark">Custom Woodwork</h3>
+                        <p class="text-sm text-text-light/80 dark:text-text-dark/80">Crafting unique, tailor-made wooden elements that add character to any space.</p>
+                    </div>
+                    <div class="group flex flex-col items-center gap-4 rounded-lg border border-text-light/10 p-6 text-center transition-all hover:border-primary/50 hover:bg-background-dark/5 dark:border-text-dark/10 dark:hover:bg-text-dark/5">
+                        <span class="material-symbols-outlined text-5xl text-primary">real_estate_agent</span>
+                        <h3 class="font-display text-xl font-bold uppercase tracking-wide text-text-light dark:text-text-dark">Consulting</h3>
+                        <p class="text-sm text-text-light/80 dark:text-text-dark/80">Providing professional advice and project management for your construction needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-background-dark/5 py-20 px-6 dark:bg-text-dark/5 md:px-10 lg:px-20" id="realisaties">
+            <div class="mx-auto max-w-6xl">
+                <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Our Recent Projects</h2>
+                <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                        <div class="h-80 w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Exterior of a modern minimalist house with large windows and a clean facade." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTFavZM7xrhCygNykJIZhgpAem_unncafrwp52ojo0hdWt1R4CoaEJRax9fn13EvoPZYDwTmrsp2NMUw5Rcdjj_qeI1shgB86qsjeGnRRSwepmEDNQpz9u7ZyDqj5j19vNHzDgyqeanhBa5jdC1tp8f-EqDe44UXyV6Eec3fNYXNrB9UE2WMxMUURS5-S6F63ReavnZdSv0a0ZFyg1vFjh6ozAAZ_UZVfOE3C3I_Y52lT-xMVOEdVknx0CeABrpXi3Vl6r6A1N1Izo")'></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="font-display text-2xl font-bold uppercase text-white">Modern Kitchen Remodel</h3>
+                            <p class="text-sm text-white/80">City Center, Anytown</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                        <div class="h-80 w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Luxurious bathroom with a standalone tub, marble tiles, and elegant fixtures." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiQVLbAxrusV9iVvU4ZKv5nC-KQwijvU08IPribIBc_8KbugyXYa0WDGwbORJSsF3Zj7ZdBI10tjGSFREWxnkHE-KZ3GkhoDiZpstUVwHwpryWL1rV5mRNoeg6HFFUJMLw-tJh2RwOdZ3oXJgx6DgSybLjdlhRudQuUkdv_JayTX3TJMEtozd6mI8WxZDxeT2OSIM2VVL_zpTOdt71lY7nIHbsTfwRBB2AuJGKbAkN6tm00fkRvVbBmpYJfJNtKeqo7r7m00XhT95K")'></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="font-display text-2xl font-bold uppercase text-white">Barn Conversion</h3>
+                            <p class="text-sm text-white/80">Countryside, Westshire</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                        <div class="h-80 w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Spacious living room with high ceilings, exposed wooden beams, and a cozy fireplace." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC2Fm7iW3vXbNWUfsIngZu5LEWpz9JA6W4pjTKBaKl_lJf_DsD7xqCkcguc64B37fAnVgTlf0wLs5f1oYuYG8KLv6aCivXk1VTSLMJ_abL9WbVbxccAFAbLWS3y2zZd4LpzrtpjJe8Cvp6guH3JeLWuJ1rbuvL9iEeXYfxFQ1QTFIMsaLCwjFxfD-9JqlMaHzH6gjGIv3YzoeMlbxhbruAgvT6F7qiPbsCQSgV7VwKUtpXgQ2bqtUJh2maZWV-_B4ehQaSUOF-_gmuz")'></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="font-display text-2xl font-bold uppercase text-white">Loft Apartment Fit-out</h3>
+                            <p class="text-sm text-white/80">Warehouse District, Metroville</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-20 px-6 md:px-10 lg:px-20 bg-background-light dark:bg-background-dark" id="contact">
+            <div class="mx-auto max-w-6xl">
+                <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Let's Build Together</h2>
+                <div class="mt-12 flex flex-col gap-12 lg:flex-row">
+                    <div class="w-full lg:w-1/2">
+                        <form action="#" class="space-y-6" method="POST">
+                            <div>
+                                <label class="sr-only" for="name">Name</label>
+                                <input class="w-full rounded-lg border-text-light/20 bg-background-dark/5 px-4 py-3 text-text-light placeholder-text-light/50 focus:border-primary focus:ring-primary dark:border-text-dark/20 dark:bg-text-dark/5 dark:text-text-dark dark:placeholder-text-dark/50" id="name" name="name" placeholder="Name" type="text"/>
+                            </div>
+                            <div>
+                                <label class="sr-only" for="email">Email</label>
+                                <input class="w-full rounded-lg border-text-light/20 bg-background-dark/5 px-4 py-3 text-text-light placeholder-text-light/50 focus:border-primary focus:ring-primary dark:border-text-dark/20 dark:bg-text-dark/5 dark:text-text-dark dark:placeholder-text-dark/50" id="email" name="email" placeholder="Email" type="email"/>
+                            </div>
+                            <div>
+                                <label class="sr-only" for="subject">Subject</label>
+                                <input class="w-full rounded-lg border-text-light/20 bg-background-dark/5 px-4 py-3 text-text-light placeholder-text-light/50 focus:border-primary focus:ring-primary dark:border-text-dark/20 dark:bg-text-dark/5 dark:text-text-dark dark:placeholder-text-dark/50" id="subject" name="subject" placeholder="Subject" type="text"/>
+                            </div>
+                            <div>
+                                <label class="sr-only" for="message">Message</label>
+                                <textarea class="w-full rounded-lg border-text-light/20 bg-background-dark/5 px-4 py-3 text-text-light placeholder-text-light/50 focus:border-primary focus:ring-primary dark:border-text-dark/20 dark:bg-text-dark/5 dark:text-text-dark dark:placeholder-text-dark/50" id="message" name="message" placeholder="Message" rows="5"></textarea>
+                            </div>
+                            <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-text-light text-background-light transition-colors hover:opacity-90 dark:bg-primary dark:text-background-dark dark:hover:opacity-90" type="submit">
+                                <span class="font-display text-base font-bold uppercase tracking-wider">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="flex w-full flex-col justify-center gap-6 lg:w-1/2 lg:pl-12">
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined mt-1 text-2xl text-primary">location_on</span>
+                            <div>
+                                <h3 class="font-display text-xl font-bold uppercase tracking-wide">Address</h3>
+                                <p class="text-text-light/80 dark:text-text-dark/80">123 Construction Ave, Buildtown, BT 45678</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined mt-1 text-2xl text-primary">mail</span>
+                            <div>
+                                <h3 class="font-display text-xl font-bold uppercase tracking-wide">Email</h3>
+                                <p class="text-text-light/80 dark:text-text-dark/80">contact@jeroenwicke.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined mt-1 text-2xl text-primary">phone</span>
+                            <div>
+                                <h3 class="font-display text-xl font-bold uppercase tracking-wide">Phone</h3>
+                                <p class="text-text-light/80 dark:text-text-dark/80">(123) 456-7890</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-background-dark/5 py-8 px-6 dark:bg-text-dark/5 md:px-10 lg:px-20">
+        <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+            <p class="text-sm text-text-light/70 dark:text-text-dark/70">© 2024 Jeroen Wicke. All Rights Reserved.</p>
+            <div class="flex items-center gap-6">
+                <a class="text-sm text-text-light/70 transition-colors hover:text-primary dark:text-text-dark/70 dark:hover:text-primary" href="#">Privacy Policy</a>
+                <a class="text-sm text-text-light/70 transition-colors hover:text-primary dark:text-text-dark/70 dark:hover:text-primary" href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+</div>
+</body></html>
