@@ -8,7 +8,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
 import { Renderer, Camera, Transform, Plane, Program, Mesh, Texture, type OGLRenderingContext } from 'ogl';
 
 type GL = OGLRenderingContext;
@@ -531,11 +532,6 @@ export interface FlyingPostersProps {
     className?: string;
 }
 
-export { Canvas, Media };
-</script>
-
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
 
 const props = withDefaults(defineProps<FlyingPostersProps>(), {
     items: () => [],

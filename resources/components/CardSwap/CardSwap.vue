@@ -27,8 +27,9 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import gsap from 'gsap';
+import { ref, onMounted, onUnmounted, watch, nextTick, computed, useTemplateRef } from 'vue';
 
 export interface CardSwapProps {
     width?: number | string;
@@ -69,12 +70,6 @@ const placeNow = (el: HTMLElement, slot: Slot, skew: number) => {
         force3D: true,
     });
 };
-
-export { makeSlot, placeNow };
-</script>
-
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, nextTick, computed, useTemplateRef } from 'vue';
 
 const props = withDefaults(defineProps<CardSwapProps>(), {
     width: 500,

@@ -81,23 +81,24 @@
             >
                 <div class="sm-panel-inner flex flex-1 flex-col gap-5">
                     <ul class="sm-panel-list m-0 flex list-none flex-col gap-2 p-0" role="list" :data-numbering="displayItemNumbering || undefined">
-                        <li
-                            v-if="items && items.length"
-                            v-for="(item, idx) in items"
-                            :key="item.label + idx"
-                            class="sm-panel-itemWrap relative overflow-hidden leading-none"
-                        >
-                            <a
-                                class="sm-panel-item relative inline-block cursor-pointer pr-[1.4em] text-[4rem] leading-none font-semibold tracking-[-2px] text-black uppercase no-underline transition-[background,color] duration-150 ease-linear"
-                                :href="item.link"
-                                :aria-label="item.ariaLabel"
-                                :data-index="idx + 1"
+                        <template v-if="items && items.length">
+                            <li
+                                v-for="(item, idx) in items"
+                                :key="item.label + idx"
+                                class="sm-panel-itemWrap relative overflow-hidden leading-none"
                             >
-                                <span class="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
-                                    {{ item.label }}
-                                </span>
-                            </a>
-                        </li>
+                                <a
+                                    class="sm-panel-item relative inline-block cursor-pointer pr-[1.4em] text-[4rem] leading-none font-semibold tracking-[-2px] text-black uppercase no-underline transition-[background,color] duration-150 ease-linear"
+                                    :href="item.link"
+                                    :aria-label="item.ariaLabel"
+                                    :data-index="idx + 1"
+                                >
+                                    <span class="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
+                                        {{ item.label }}
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
                         <li v-else class="sm-panel-itemWrap relative overflow-hidden leading-none" aria-hidden="true">
                             <span
                                 class="sm-panel-item relative inline-block cursor-pointer pr-[1.4em] text-[4rem] leading-none font-semibold tracking-[-2px] text-black uppercase no-underline transition-[background,color] duration-150 ease-linear"

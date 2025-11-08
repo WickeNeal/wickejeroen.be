@@ -19,7 +19,7 @@
 import GooeyNav from "../../components/GooeyNav/GooeyNav.vue";
 import { defineProps } from 'vue';
 
-const props = defineProps<{
+defineProps<{
   activeSectionIndex: number;
 }>();
 

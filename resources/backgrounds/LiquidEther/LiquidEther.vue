@@ -569,7 +569,7 @@ const initWebGL = () => {
             this.uniforms = this.props.material?.uniforms;
         }
 
-        init(..._args: any[]) {
+        init() {
             this.scene = new THREE.Scene();
             this.camera = new THREE.Camera();
             if (this.uniforms) {
@@ -580,7 +580,7 @@ const initWebGL = () => {
             }
         }
 
-        update(..._args: any[]) {
+        update() {
             if (!Common.renderer || !this.scene || !this.camera) return;
             Common.renderer.setRenderTarget(this.props.output || null);
             Common.renderer.render(this.scene, this.camera);
