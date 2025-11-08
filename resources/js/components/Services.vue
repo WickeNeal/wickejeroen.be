@@ -2,7 +2,7 @@
     <section class="bg-background-light dark:bg-background-dark px-6 pt-20 md:px-10 lg:px-20" id="diensten">
         <div class="bg-background-light dark:bg-background-dark mx-auto max-w-6xl">
             <h2 class="font-display text-text-light dark:text-primary mb-8 text-center text-4xl font-bold tracking-wider uppercase md:text-5xl">
-                Our Services
+                Onze diensten
             </h2>
         </div>
         <div class="h-screen w-full">

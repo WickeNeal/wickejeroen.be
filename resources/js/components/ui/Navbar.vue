@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 const navLinks = ref([
-  { name: 'Home', href: '/' },
+  { name: 'Home', href: '/home' },
   { name: 'Diensten', href: '/diensten' },
   { name: 'Realisaties', href: '/realisaties' },
   { name: 'Contact', href: '/contact' },

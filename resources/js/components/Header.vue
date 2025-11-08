@@ -1,9 +1,9 @@
 <template>
-    <header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap bg-background-light/80 px-6 py-4 shadow-md backdrop-blur-sm dark:bg-background-dark/80 md:px-10 lg:px-20">
+    <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-center whitespace-nowrap px-6 py-4 md:px-10 lg:px-20">
         <GooeyNav
           :items="navItems"
           :animation-time="600"
-          :particle-count="15"
+          :particle-count="5"
           :particle-distances="[90, 10]"
           :particle-r="100"
           :time-variance="300"
@@ -19,7 +19,7 @@
 import GooeyNav from "../../components/GooeyNav/GooeyNav.vue";
 
 const navItems = [
-  { label: 'Home', href: '#' },
+  { label: 'Home', href: '#home' },
   { label: 'Diensten', href: '#diensten' },
   { label: 'Realisaties', href: '#realisaties' },
   { label: 'Contact', href: '#contact' }

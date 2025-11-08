@@ -1,5 +1,5 @@
 <template>
-    <section class="relative flex min-h-[calc(100vh-80px)] w-full flex-col lg:flex-row overflow-hidden">
+    <section class="relative flex min-h-screen w-full flex-col lg:flex-row overflow-hidden">
         <div class="absolute inset-0 z-0">
             <DotGrid
                 :dot-size="5"
