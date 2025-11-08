@@ -23,7 +23,7 @@
                 Met meer dan 15 jaar ervaring in de bouwsector staan we garant voor kwaliteit en betrouwbaarheid. Onze missie? Uw visie omzetten in realiteit, met oog voor detail en duurzaamheid.            </p>
         </div>
         <div class="relative z-10 h-96 w-full lg:h-auto lg:w-1/2">
-            <div class="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat" data-alt="A modern kitchen with clean lines and high-end appliances, a showcase of quality renovation work." style="background-image: url('/images/Wicke Jeroen logo/6-big.png');"></div>
+            <div class="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('images/Wicke Jeroen logo/6-big.png');"></div>
             <div class="absolute inset-0 bg-background-dark/20 dark:bg-background-dark/40"></div>
         </div>
     </section>
