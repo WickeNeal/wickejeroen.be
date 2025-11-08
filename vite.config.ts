@@ -5,7 +5,7 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    base: process.env.NODE_ENV === 'production' ? '/wickejeroen.be/' : './',
+    base: process.env.NODE_ENV === 'production' ? '/wickejeroen.be/build/' : './',
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
