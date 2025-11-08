@@ -1,24 +1,27 @@
 <template>
-    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap bg-background-light/80 px-6 py-4 shadow-md backdrop-blur-sm dark:bg-background-dark/80 md:px-10 lg:px-20">
-        <div class="flex items-center gap-4">
-            <div class="text-primary">
-                <div>
-                    <a href="/">
-
-                    </a>
-                </div>
-            </div>
-        </div>
-        <nav class="hidden items-center gap-8 md:flex">
-            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#">Home</a>
-            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#diensten">Diensten</a>
-            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#realisaties">Realisaties</a>
-            <a class="text-sm font-bold uppercase tracking-wider text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary" href="#contact">Contact</a>
-        </nav>
+    <header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap bg-background-light/80 px-6 py-4 shadow-md backdrop-blur-sm dark:bg-background-dark/80 md:px-10 lg:px-20">
+        <GooeyNav
+          :items="navItems"
+          :animation-time="600"
+          :particle-count="15"
+          :particle-distances="[90, 10]"
+          :particle-r="100"
+          :time-variance="300"
+          :colors="[1, 2, 3, 1, 2, 3, 1, 4]"
+          :initial-active-index="0"
+        />
         <button class="md:hidden text-text-light dark:text-text-dark">
             <span class="material-symbols-outlined text-3xl">menu</span>
         </button>
     </header>
 </template>
 <script setup lang="ts">
+import GooeyNav from "../../components/GooeyNav/GooeyNav.vue";
+
+const navItems = [
+  { label: 'Home', href: '#' },
+  { label: 'Diensten', href: '#diensten' },
+  { label: 'Realisaties', href: '#realisaties' },
+  { label: 'Contact', href: '#contact' }
+];
 </script>

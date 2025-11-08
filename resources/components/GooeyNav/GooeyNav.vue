@@ -43,6 +43,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
+gsap.registerPlugin(ScrollToPlugin);
 
 interface GooeyNavItem {
     label: string;
@@ -149,22 +153,37 @@ const updateEffectPosition = (element: HTMLElement) => {
 };
 
 const handleClick = (e: Event, index: number) => {
-    const liEl = (e.currentTarget as HTMLElement).parentElement as HTMLElement;
-    if (activeIndex.value === index) return;
-    activeIndex.value = index;
-    updateEffectPosition(liEl);
-    if (filterRef.value) {
-        const particles = filterRef.value.querySelectorAll('.particle');
-        particles.forEach((p) => filterRef.value!.removeChild(p));
-    }
-    if (textRef.value) {
-        textRef.value.classList.remove('active');
-        void textRef.value.offsetWidth;
-        textRef.value.classList.add('active');
-    }
-    if (filterRef.value) {
-        makeParticles(filterRef.value);
-    }
+  e.preventDefault(); // Prevent default link behavior
+
+  const liEl = (e.currentTarget as HTMLElement).parentElement as HTMLElement;
+  if (activeIndex.value === index) return;
+  activeIndex.value = index;
+  updateEffectPosition(liEl);
+  if (filterRef.value) {
+    const particles = filterRef.value.querySelectorAll('.particle');
+    particles.forEach(p => filterRef.value!.removeChild(p));
+  }
+  if (textRef.value) {
+    textRef.value.classList.remove('active');
+    void textRef.value.offsetWidth;
+    textRef.value.classList.add('active');
+  }
+  if (filterRef.value) {
+    makeParticles(filterRef.value);
+  }
+
+  // Get the target href from the item
+  const targetHref = props.items[index].href;
+  if (targetHref && targetHref.startsWith('#')) {
+    gsap.to(window, {
+      duration: 1, // Animation duration in seconds
+      scrollTo: targetHref, // Scroll to the target element
+      ease: 'power2.out' // Exponential easing: starts slow, accelerates
+    });
+  } else if (targetHref) {
+    // If it's not a hash link, just navigate normally
+    window.location.href = targetHref;
+  }
 };
 
 const handleKeyDown = (e: KeyboardEvent, index: number) => {
@@ -263,18 +282,12 @@ onUnmounted(() => {
 }
 
 .effect.filter {
-    filter: blur(7px) contrast(100) blur(0);
-    mix-blend-mode: lighten;
+  /* Removed filter and mix-blend-mode to eliminate the gooey effect */
 }
 
 .effect.filter::before {
-    content: '';
-    position: absolute;
-    inset: -75px;
-    z-index: -2;
-    background: black;
+  /* Removed to eliminate the black background contributing to the gooey effect */
 }
-
 .effect.filter::after {
     content: '';
     position: absolute;
