@@ -15,7 +15,7 @@ const navLinks = ref([
       <!-- Logo -->
       <div>
         <a href="/">
-          <img src="/images/Wicke Jeroen logo/1.png" alt="Logo" class="h-10">
+          <img src="../../images/Wicke Jeroen logo/6.png" alt="Logo" class="h-10">
         </a>
       </div>
 

@@ -11,34 +11,33 @@
                 class="relative flex-1 overflow-hidden text-center shadow-[0_-1px_0_0_#fff]"
                 :ref="(el) => setItemRef(el as HTMLDivElement, idx)"
             >
-                <a
-                    class="relative flex h-full cursor-pointer items-center justify-center text-[4vh] font-semibold text-white uppercase no-underline hover:text-[#0b0b0b] focus:text-white focus-visible:text-[#0b0b0b]"
-                    :href="item.link"
-                    @mouseenter="(ev) => handleMouseEnter(ev, idx)"
-                    @mouseleave="(ev) => handleMouseLeave(ev, idx)"
-                >
-                    {{ item.text }}
-                </a>
+          <a
+            class="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-white text-[4vh] hover:text-[#0b0b0b] focus:text-white focus-visible:text-[#0b0b0b]"
+            :href="item.link"
+            @mouseenter="ev => handleMouseEnter(ev, idx)"
+            @mouseleave="ev => handleMouseLeave(ev, idx)"
+          >
+            {{ item.text }}
+          </a>
 
-                <div
-                    class="pointer-events-none absolute top-0 left-0 h-full w-full translate-y-[101%] overflow-hidden bg-white"
-                    :ref="(el) => (marqueeRefs[idx] = el as HTMLDivElement)"
-                >
-                    <div class="flex h-full w-[200%]" :ref="(el) => (marqueeInnerRefs[idx] = el as HTMLDivElement)">
-                        <div class="animate-marquee relative flex h-full w-[200%] items-center will-change-transform">
-                            <template v-for="i in 4" :key="`${idx}-${i}`">
-                                <span class="p-[1vh_1vw_0] text-[4vh] leading-[1.2] font-normal text-[#0b0b0b] uppercase">
-                                    {{ item.text }}
-                                </span>
-
-                                <div
-                                    class="mx-[2vw] my-[2em] h-[7vh] w-[200px] rounded-[50px] bg-cover bg-center p-[1em_0]"
-                                    :style="{ backgroundImage: `url(${item.image})` }"
-                                />
-                            </template>
-                        </div>
-                    </div>
-                </div>
+          <div
+            class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none translate-y-[101%] bg-cover bg-center"
+            :style="{ backgroundImage: `url(${item.image})` }"
+            :ref="el => (marqueeRefs[idx] = el as HTMLDivElement)"
+          >
+            <div class="absolute inset-0 bg-black opacity-70"></div>
+            <div class="h-full w-[200%] flex" :ref="el => (marqueeInnerRefs[idx] = el as HTMLDivElement)">
+              <div class="flex items-center relative h-full w-max will-change-transform animate-marquee">
+                <template v-for="i in 2" :key="`${idx}-${i}`">
+                  <div class="flex items-center justify-center p-[1vh_1vw_0] whitespace-nowrap flex-shrink-0">
+                    <p class="text-white uppercase font-semibold text-[4vh] leading-[1.2] mr-[1vw]">
+                      {{ item.description }}
+                    </p>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
             </div>
         </nav>
     </div>
@@ -49,11 +48,12 @@ import { ref } from 'vue';
 import { gsap } from 'gsap';
 
 interface MenuItemProps {
-    link: string;
-    text: string;
-    image: string;
+  link: string;
+  text: string;
+  image: string;
+  icon?: string;
+  description?: string;
 }
-
 interface Props {
     items?: MenuItemProps[];
 }
