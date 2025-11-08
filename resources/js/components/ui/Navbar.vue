@@ -1,40 +1,42 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
-// This path will now work because you just added the image
-const logoUrl = '/images/logo-beige.png'
+const navLinks = ref([
+  { name: 'Home', href: '/' },
+  { name: 'Diensten', href: '/diensten' },
+  { name: 'Realisaties', href: '/realisaties' },
+  { name: 'Contact', href: '/contact' },
+])
 </script>
 
 <template>
-    <nav class="container mx-auto max-w-7xl px-6 py-8">
-        <div class="flex items-center justify-between">
-            <Link href="/">
-                <img :src="logoUrl" alt="Jeroen Wicke Logo" class="h-10 w-auto" />
-            </Link>
+  <nav class="bg-secondary p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <div>
+        <a href="/">
+          <img src="/images/Wicke Jeroen logo/1.png" alt="Logo" class="h-10">
+        </a>
+      </div>
 
-            <div class="hidden items-center space-x-8 md:flex">
-                <a href="#diensten"
-                   class="text-foreground/70 transition-colors hover:text-foreground">
-                    Onze diensten
-                </a>
-                <a href="#fotos"
-                   class="text-foreground/70 transition-colors hover:text-foreground">
-                    Foto's
-                </a>
+      <!-- Navigation Links -->
+      <div class="hidden md:flex space-x-8">
+        <a v-for="link in navLinks" :key="link.name" :href="link.href" class="text-foreground hover:text-primary transition-colors text-lg font-medium">
+          {{ link.name }}
+        </a>
+      </div>
 
-                <a href="#contact"
-                   class="rounded-md bg-primary px-4 py-2 text-primary-foreground transition-opacity hover:opacity-90">
-                    Neem contact op
-                </a>
-            </div>
-
-            <div class="md:hidden">
-                <button class="text-foreground">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
-            </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+            <!-- Hamburger Icon -->
+            <button class="text-foreground">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </div>
-    </nav>
+    </div>
+  </nav>
 </template>
+
+<style scoped>
+/* Scoped styles for the navbar can go here if needed */
+</style>
