@@ -1,9 +1,9 @@
 <template>
     <section class="py-20 px-6 md:px-10 lg:px-20 bg-background-light dark:bg-background-dark" id="diensten">
-        <div class="mx-auto max-w-6xl">
-            <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Our Services</h2>
-            <div class="mt-6">
-                <ScrollStack class="h-screen bg-background-light dark:bg-background-dark">
+        <div class="mx-auto max-w-6xl bg-background-light dark:bg-background-dark">
+            <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl mb-8">Our Services</h2>
+            <div class="">
+                <ScrollStack class="h-screen">
                     <ScrollStackItem item-class-name="bg-background-light dark:bg-background-dark">
                         <div class="flex flex-col items-center gap-4 text-center">
                             <span class="material-symbols-outlined text-5xl text-primary">construction</span>

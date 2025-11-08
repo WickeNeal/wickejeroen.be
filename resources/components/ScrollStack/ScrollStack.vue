@@ -265,6 +265,7 @@ export const ScrollStackItem = defineComponent({
                     style: {
                         backfaceVisibility: 'hidden',
                         transformStyle: 'preserve-3d',
+                        opacity: 1,
                     },
                 },
                 slots.default?.(),
