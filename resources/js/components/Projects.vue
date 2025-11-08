@@ -19,12 +19,13 @@ import CircularGallery from '../../components/CircularGallery/CircularGallery.vu
 import { computed } from 'vue';
 
 const customImages = [
-    "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1495103033382-fe343886b671?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1506781961370-37a89d6b3095?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    // Add more images as needed
+    "/wickejeroen.be/images/mooiste foto's/20170814_114439.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20190828_141341 1.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20191121_164606 1.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20200124_134219 1.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20200310_080808.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20200326_112935.jpg",
+    "/wickejeroen.be/images/mooiste foto's/IMG_20210320_131124.jpg",
 ];
 
 const circularGalleryItems = computed(() => {
