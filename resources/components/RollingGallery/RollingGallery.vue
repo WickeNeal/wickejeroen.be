@@ -1,16 +1,10 @@
-<!--
-	Installed from https://vue-bits.dev/ui/
--->
-
 <template>
-    <div class="relative h-[500px] w-full overflow-hidden">
-        <div class="absolute top-0 left-0 z-10 h-full w-12 bg-gradient-to-l from-transparent to-[#0b0b0b]" />
-        <div class="absolute top-0 right-0 z-10 h-full w-12 bg-gradient-to-r from-transparent to-[#0b0b0b]" />
+    <div class="relative h-[70vh] w-full overflow-hidden">
 
         <div class="flex h-full items-center justify-center [perspective:1000px] [transform-style:preserve-3d]">
             <Motion
                 tag="div"
-                class="flex min-h-[200px] w-full cursor-grab items-center justify-center will-change-transform select-none [transform-style:preserve-3d] active:cursor-grabbing"
+                class="flex min-h-[200px] items-center justify-center w-full cursor-grab select-none will-change-transform [transform-style:preserve-3d] active:cursor-grabbing"
                 :style="trackStyle"
                 :animate="animateProps"
                 :transition="springTransition"
@@ -22,14 +16,14 @@
                     v-for="(url, i) in displayImages"
                     :key="`gallery-${i}`"
                     :style="getItemStyle(i)"
-                    class="pointer-events-none absolute flex items-center justify-center px-[8%] will-change-transform [backface-visibility:hidden]"
+                    class="absolute flex items-center justify-center px-[8%] [backface-visibility:hidden] will-change-transform pointer-events-none"
                 >
                     <img
                         :src="url"
                         alt="gallery"
                         loading="lazy"
                         decoding="async"
-                        class="pointer-events-auto h-[120px] w-[300px] rounded-[15px] border-[3px] border-white object-cover transition-transform duration-300 ease-in-out will-change-transform hover:scale-105"
+                        class="pointer-events-auto h-[300px] w-[700px] rounded-[15px] border-[3px] border-white object-cover transition-transform duration-300 ease-in-out will-change-transform hover:scale-105"
                     />
                 </div>
             </Motion>
@@ -50,7 +44,7 @@ interface RollingGalleryProps {
 const props = withDefaults(defineProps<RollingGalleryProps>(), {
     autoplay: false,
     pauseOnHover: false,
-    images: () => [],
+    images: () => []
 });
 
 const DEFAULT_IMAGES = shallowRef([
@@ -63,7 +57,7 @@ const DEFAULT_IMAGES = shallowRef([
     'https://images.unsplash.com/photo-1494094892896-7f14a4433b7a?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1664910706524-e783eed89e71?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1503788311183-fa3bf9c4bc32?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1585970480901-90d6bb2a48b5?q=80&w=3774&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1585970480901-90d6bb2a48b5?q=80&w=3774&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 ]);
 
 const isScreenSizeSm = ref(false);
@@ -93,7 +87,7 @@ const displayImages = computed(() => {
     return repeatedImages.slice(0, maxImages);
 });
 
-const cylinderWidth = computed(() => (isScreenSizeSm.value ? 1100 : 1800));
+const cylinderWidth = computed(() => (isScreenSizeSm.value ? 2000 : 3000));
 const faceWidth = computed(() => {
     return (cylinderWidth.value / REFERENCE_FACE_COUNT_SIZING) * 1.5;
 });
@@ -110,11 +104,11 @@ const REFERENCE_FACE_COUNT_SIZING = Object.freeze(10);
 
 const trackStyle = computed(() => ({
     width: `${cylinderWidth.value}px`,
-    transformStyle: 'preserve-3d' as const,
+    transformStyle: 'preserve-3d' as const
 }));
 
 const animateProps = computed(() => ({
-    rotateY: rotateYValue.value,
+    rotateY: rotateYValue.value
 }));
 
 const springTransition = computed(() => {
@@ -123,7 +117,7 @@ const springTransition = computed(() => {
     } else {
         return {
             duration: 0.8,
-            ease: 'easeOut' as const,
+            ease: 'easeOut' as const
         };
     }
 });
@@ -139,7 +133,7 @@ const getItemStyle = (index: number) => {
 
     const style = {
         width: `${faceWidth.value}px`,
-        transform: `rotateY(${index * (360 / REFERENCE_FACE_COUNT_SPACING)}deg) translateZ(${radius.value}px)`,
+        transform: `rotateY(${index * (360 / REFERENCE_FACE_COUNT_SPACING)}deg) translateZ(${radius.value}px)`
     };
 
     if (styleCache.size > 50) {
@@ -295,7 +289,7 @@ onUnmounted(() => {
 
 watch(
     () => props.autoplay,
-    (newVal) => {
+    newVal => {
         stopAutoplay();
         if (newVal && !isDragging.value && (!props.pauseOnHover || !isHovered.value)) {
             autoplayTimeout.value = setTimeout(() => {
@@ -304,7 +298,7 @@ watch(
                 }
             }, HOVER_RESTART_DELAY);
         }
-    },
+    }
 );
 
 watch(
@@ -316,6 +310,6 @@ watch(
                 startAutoplay();
             }
         }
-    },
+    }
 );
 </script>

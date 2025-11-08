@@ -1,7 +1,3 @@
-<!--
-	Installed from https://vue-bits.dev/ui/
--->
-
 <template>
     <div>
         <div class="relative" ref="containerRef">
@@ -19,7 +15,7 @@
                         :key="index"
                         :class="[
                             'ease relative cursor-pointer rounded-full text-white shadow-[0_0_0.5px_1.5px_transparent] transition-[background-color_color_box-shadow] duration-300',
-                            { active: activeIndex === index },
+                            { active: props.activeIndex === index },
                         ]"
                     >
                         <a
@@ -61,7 +57,7 @@ interface GooeyNavProps {
     particleR?: number;
     timeVariance?: number;
     colors?: number[];
-    initialActiveIndex?: number;
+    activeIndex?: number; // Changed from initialActiveIndex
 }
 
 const props = withDefaults(defineProps<GooeyNavProps>(), {
@@ -71,93 +67,91 @@ const props = withDefaults(defineProps<GooeyNavProps>(), {
     particleR: 100,
     timeVariance: 300,
     colors: () => [1, 2, 3, 1, 2, 3, 1, 4],
-    initialActiveIndex: 0,
+    activeIndex: 0, // Changed from initialActiveIndex
 });
 
 const containerRef = useTemplateRef<HTMLDivElement>('containerRef');
 const navRef = useTemplateRef<HTMLUListElement>('navRef');
 const filterRef = useTemplateRef<HTMLSpanElement>('filterRef');
 const textRef = useTemplateRef<HTMLSpanElement>('textRef');
-const activeIndex = ref<number>(props.initialActiveIndex);
 
 let resizeObserver: ResizeObserver | null = null;
 
 const noise = (n = 1) => n / 2 - Math.random() * n;
 
 const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
-    const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
-    return [distance * Math.cos(angle), distance * Math.sin(angle)];
+  const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
+  return [distance * Math.cos(angle), distance * Math.sin(angle)];
 };
 
 const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-    const rotate = noise(r / 10);
-    return {
-        start: getXY(d[0], props.particleCount - i, props.particleCount),
-        end: getXY(d[1] + noise(7), props.particleCount - i, props.particleCount),
-        time: t,
-        scale: 1 + noise(0.2),
-        color: props.colors[Math.floor(Math.random() * props.colors.length)],
-        rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
-    };
+  const rotate = noise(r / 10);
+  return {
+    start: getXY(d[0], props.particleCount - i, props.particleCount),
+    end: getXY(d[1] + noise(7), props.particleCount - i, props.particleCount),
+    time: t,
+    scale: 1 + noise(0.2),
+    color: props.colors[Math.floor(Math.random() * props.colors.length)],
+    rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10
+  };
 };
 
 const makeParticles = (element: HTMLElement) => {
-    const d: [number, number] = props.particleDistances;
-    const r = props.particleR;
-    const bubbleTime = props.animationTime * 2 + props.timeVariance;
-    element.style.setProperty('--time', `${bubbleTime}ms`);
-    for (let i = 0; i < props.particleCount; i++) {
-        const t = props.animationTime * 2 + noise(props.timeVariance * 2);
-        const p = createParticle(i, t, d, r);
-        element.classList.remove('active');
-        setTimeout(() => {
-            const particle = document.createElement('span');
-            const point = document.createElement('span');
-            particle.classList.add('particle');
-            particle.style.setProperty('--start-x', `${p.start[0]}px`);
-            particle.style.setProperty('--start-y', `${p.start[1]}px`);
-            particle.style.setProperty('--end-x', `${p.end[0]}px`);
-            particle.style.setProperty('--end-y', `${p.end[1]}px`);
-            particle.style.setProperty('--time', `${p.time}ms`);
-            particle.style.setProperty('--scale', `${p.scale}`);
-            particle.style.setProperty('--color', `var(--color-${p.color}, white)`);
-            particle.style.setProperty('--rotate', `${p.rotate}deg`);
-            point.classList.add('point');
-            particle.appendChild(point);
-            element.appendChild(particle);
-            requestAnimationFrame(() => {
-                element.classList.add('active');
-            });
-            setTimeout(() => {
-                try {
-                    element.removeChild(particle);
-                } catch {}
-            }, t);
-        }, 30);
-    }
+  const d: [number, number] = props.particleDistances;
+  const r = props.particleR;
+  const bubbleTime = props.animationTime * 2 + props.timeVariance;
+  element.style.setProperty('--time', `${bubbleTime}ms`);
+  for (let i = 0; i < props.particleCount; i++) {
+    const t = props.animationTime * 2 + noise(props.timeVariance * 2);
+    const p = createParticle(i, t, d, r);
+    element.classList.remove('active');
+    setTimeout(() => {
+      const particle = document.createElement('span');
+      const point = document.createElement('span');
+      particle.classList.add('particle');
+      particle.style.setProperty('--start-x', `${p.start[0]}px`);
+      particle.style.setProperty('--start-y', `${p.start[1]}px`);
+      particle.style.setProperty('--end-x', `${p.end[0]}px`);
+      particle.style.setProperty('--end-y', `${p.end[1]}px`);
+      particle.style.setProperty('--time', `${p.time}ms`);
+      particle.style.setProperty('--scale', `${p.scale}`);
+      particle.style.setProperty('--color', `var(--color-${p.color}, white)`);
+      particle.style.setProperty('--rotate', `${p.rotate}deg`);
+      point.classList.add('point');
+      particle.appendChild(point);
+      element.appendChild(particle);
+      requestAnimationFrame(() => {
+        element.classList.add('active');
+      });
+      setTimeout(() => {
+        try {
+          element.removeChild(particle);
+        } catch {}
+      }, t);
+    }, 30);
+  }
 };
 
 const updateEffectPosition = (element: HTMLElement) => {
-    if (!containerRef.value || !filterRef.value || !textRef.value) return;
-    const containerRect = containerRef.value.getBoundingClientRect();
-    const pos = element.getBoundingClientRect();
-    const styles = {
-        left: `${pos.x - containerRect.x}px`,
-        top: `${pos.y - containerRect.y}px`,
-        width: `${pos.width}px`,
-        height: `${pos.height}px`,
-    };
-    Object.assign(filterRef.value.style, styles);
-    Object.assign(textRef.value.style, styles);
-    textRef.value.innerText = element.innerText;
+  if (!containerRef.value || !filterRef.value || !textRef.value) return;
+  const containerRect = containerRef.value.getBoundingClientRect();
+  const pos = element.getBoundingClientRect();
+  const styles = {
+    left: `${pos.x - containerRect.x}px`,
+    top: `${pos.y - containerRect.y}px`,
+    width: `${pos.width}px`,
+    height: `${pos.height}px`
+  };
+  Object.assign(filterRef.value.style, styles);
+  Object.assign(textRef.value.style, styles);
+  textRef.value.innerText = element.innerText;
 };
 
 const handleClick = (e: Event, index: number) => {
   e.preventDefault(); // Prevent default link behavior
 
   const liEl = (e.currentTarget as HTMLElement).parentElement as HTMLElement;
-  if (activeIndex.value === index) return;
-  activeIndex.value = index;
+  // activeIndex.value = index; // Removed this line as activeIndex is now controlled by prop
   updateEffectPosition(liEl);
   if (filterRef.value) {
     const particles = filterRef.value.querySelectorAll('.particle');
@@ -187,49 +181,49 @@ const handleClick = (e: Event, index: number) => {
 };
 
 const handleKeyDown = (e: KeyboardEvent, index: number) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const liEl = (e.currentTarget as HTMLElement).parentElement;
-        if (liEl) {
-            handleClick(
-                {
-                    currentTarget: liEl,
-                } as unknown as Event,
-                index,
-            );
-        }
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    const liEl = (e.currentTarget as HTMLElement).parentElement;
+    if (liEl) {
+      handleClick(
+        {
+          currentTarget: liEl
+        } as unknown as Event,
+        index
+      );
     }
+  }
 };
 
-watch(activeIndex, () => {
-    if (!navRef.value || !containerRef.value) return;
-    const activeLi = navRef.value.querySelectorAll('li')[activeIndex.value] as HTMLElement;
-    if (activeLi) {
-        updateEffectPosition(activeLi);
-        textRef.value?.classList.add('active');
-    }
+watch(() => props.activeIndex, (newIndex) => { // Watch the prop directly
+  if (!navRef.value || !containerRef.value) return;
+  const activeLi = navRef.value.querySelectorAll('li')[newIndex] as HTMLElement;
+  if (activeLi) {
+    updateEffectPosition(activeLi);
+    textRef.value?.classList.add('active');
+  }
 });
 
 onMounted(() => {
-    if (!navRef.value || !containerRef.value) return;
-    const activeLi = navRef.value.querySelectorAll('li')[activeIndex.value] as HTMLElement;
-    if (activeLi) {
-        updateEffectPosition(activeLi);
-        textRef.value?.classList.add('active');
+  if (!navRef.value || !containerRef.value) return;
+  const activeLi = navRef.value.querySelectorAll('li')[props.activeIndex] as HTMLElement;
+  if (activeLi) {
+    updateEffectPosition(activeLi);
+    textRef.value?.classList.add('active');
+  }
+  resizeObserver = new ResizeObserver(() => {
+    const currentActiveLi = navRef.value?.querySelectorAll('li')[props.activeIndex] as HTMLElement;
+    if (currentActiveLi) {
+      updateEffectPosition(currentActiveLi);
     }
-    resizeObserver = new ResizeObserver(() => {
-        const currentActiveLi = navRef.value?.querySelectorAll('li')[activeIndex.value] as HTMLElement;
-        if (currentActiveLi) {
-            updateEffectPosition(currentActiveLi);
-        }
-    });
-    resizeObserver.observe(containerRef.value);
+  });
+  resizeObserver.observe(containerRef.value);
 });
 
 onUnmounted(() => {
-    if (resizeObserver) {
-        resizeObserver.disconnect();
-    }
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+  }
 });
 </script>
 

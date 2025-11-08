@@ -12,7 +12,7 @@
                 :ref="(el) => setItemRef(el as HTMLDivElement, idx)"
             >
           <a
-            class="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-white text-[4vh] hover:text-[#0b0b0b] focus:text-white focus-visible:text-[#0b0b0b]"
+            class="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-[4vh] hover:text-[#0b0b0b] focus-visible:text-[#0b0b0b]"
             :href="item.link"
             @mouseenter="ev => handleMouseEnter(ev, idx)"
             @mouseleave="ev => handleMouseLeave(ev, idx)"
@@ -30,7 +30,7 @@
               <div class="flex items-center relative h-full w-max will-change-transform animate-marquee">
                 <template v-for="i in 2" :key="`${idx}-${i}`">
                   <div class="flex items-center justify-center p-[1vh_1vw_0] whitespace-nowrap flex-shrink-0">
-                    <p class="text-white uppercase font-semibold text-[4vh] leading-[1.2] mr-[1vw]">
+                    <p class=" uppercase font-semibold text-[4vh] leading-[1.2] mr-[1vw]">
                       {{ item.description }}
                     </p>
                   </div>

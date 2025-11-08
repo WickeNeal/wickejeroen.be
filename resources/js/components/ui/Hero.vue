@@ -1,5 +1,5 @@
 <template>
-    <section class="relative flex min-h-screen w-full flex-col lg:flex-row overflow-hidden">
+    <section id="home" class="relative flex min-h-screen w-full flex-col lg:flex-row overflow-hidden">
         <div class="absolute inset-0 z-0">
             <DotGrid
                 :dot-size="5"
@@ -19,11 +19,8 @@
             <h1 class="font-display text-5xl font-bold uppercase leading-tight tracking-wide text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">
                 Kwaliteit Vakmanschap, Blijvende resultaten
             </h1>
-            <p class="text-lg text-text-light/80 dark:text-text-dark/80">
+            <p class="font-semibold text-lg text-text-light/80 dark:text-text-dark/80">
                 Met meer dan 15 jaar ervaring in de bouwsector staan we garant voor kwaliteit en betrouwbaarheid. Onze missie? Uw visie omzetten in realiteit, met oog voor detail en duurzaamheid.            </p>
-            <button class="mt-4 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-text-light text-background-light transition-all hover:opacity-90 dark:bg-primary dark:text-background-dark dark:hover:opacity-90">
-                <span class="font-display text-base font-bold uppercase tracking-wider">View Our Work</span>
-            </button>
         </div>
         <div class="relative z-10 h-96 w-full lg:h-auto lg:w-1/2">
             <div class="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat" data-alt="A modern kitchen with clean lines and high-end appliances, a showcase of quality renovation work." style="background-image: url('/images/Wicke Jeroen logo/6-big.png');"></div>

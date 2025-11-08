@@ -1,9 +1,5 @@
-<!--
-	Installed from https://vue-bits.dev/ui/
--->
-
 <template>
-    <div ref="containerRef" class="h-full w-full cursor-grab overflow-hidden active:cursor-grabbing" />
+    <div ref="containerRef" class="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing" />
 </template>
 
 <script setup lang="ts">
@@ -26,7 +22,7 @@ const props = withDefaults(defineProps<CircularGalleryProps>(), {
     borderRadius: 0.05,
     font: 'bold 30px Figtree',
     scrollSpeed: 2,
-    scrollEase: 0.05,
+    scrollEase: 0.05
 });
 
 const containerRef = useTemplateRef<HTMLDivElement>('containerRef');
@@ -49,7 +45,7 @@ function lerp(p1: number, p2: number, t: number): number {
 function autoBind<T extends object>(instance: T): void {
     const proto = Object.getPrototypeOf(instance) as Record<string, unknown> | null;
     if (!proto) return;
-    Object.getOwnPropertyNames(proto).forEach((key) => {
+    Object.getOwnPropertyNames(proto).forEach(key => {
         if (key !== 'constructor') {
             const desc = Object.getOwnPropertyDescriptor(proto, key);
             if (desc && typeof desc.value === 'function') {
@@ -69,7 +65,7 @@ function createTextTexture(
     gl: GL,
     text: string,
     font: string = 'bold 30px monospace',
-    color: string = 'black',
+    color: string = 'black'
 ): { texture: Texture; width: number; height: number } {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -151,7 +147,7 @@ class Title {
         }
       `,
             uniforms: { tMap: { value: texture } },
-            transparent: true,
+            transparent: true
         });
         this.mesh = new Mesh(this.gl, { geometry, program });
         const aspect = width / height;
@@ -219,21 +215,21 @@ class Media {
     isAfter: boolean = false;
 
     constructor({
-        geometry,
-        gl,
-        image,
-        index,
-        length,
-        renderer,
-        scene,
-        screen,
-        text,
-        viewport,
-        bend,
-        textColor,
-        borderRadius = 0,
-        font,
-    }: MediaProps) {
+                    geometry,
+                    gl,
+                    image,
+                    index,
+                    length,
+                    renderer,
+                    scene,
+                    screen,
+                    text,
+                    viewport,
+                    bend,
+                    textColor,
+                    borderRadius = 0,
+                    font
+                }: MediaProps) {
         this.geometry = geometry;
         this.gl = gl;
         this.image = image;
@@ -282,12 +278,12 @@ class Media {
         uniform sampler2D tMap;
         uniform float uBorderRadius;
         varying vec2 vUv;
-        
+
         float roundedBoxSDF(vec2 p, vec2 b, float r) {
           vec2 d = abs(p) - b;
           return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
         }
-        
+
         void main() {
           vec2 ratio = vec2(
             min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
@@ -298,12 +294,12 @@ class Media {
             vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
           vec4 color = texture2D(tMap, uv);
-          
+
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           if(d > 0.0) {
             discard;
           }
-          
+
           gl_FragColor = vec4(color.rgb, 1.0);
         }
       `,
@@ -313,9 +309,9 @@ class Media {
                 uImageSizes: { value: [0, 0] },
                 uSpeed: { value: 0 },
                 uTime: { value: 100 * Math.random() },
-                uBorderRadius: { value: this.borderRadius },
+                uBorderRadius: { value: this.borderRadius }
             },
-            transparent: true,
+            transparent: true
         });
         const img = new Image();
         img.crossOrigin = 'anonymous';
@@ -329,7 +325,7 @@ class Media {
     createMesh() {
         this.plane = new Mesh(this.gl, {
             geometry: this.geometry,
-            program: this.program,
+            program: this.program
         });
         this.plane.setParent(this.scene);
     }
@@ -341,7 +337,7 @@ class Media {
             renderer: this.renderer,
             text: this.text,
             textColor: this.textColor,
-            font: this.font,
+            font: this.font
         });
     }
 
@@ -395,11 +391,11 @@ class Media {
                 this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
             }
         }
-        this.scale = this.screen.height / 1500;
-        this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-        this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+        this.scale = this.screen.height / 1000;
+        this.plane.scale.y = ((this.viewport.height * (1600 * this.scale)) / this.screen.height) * 0.95;
+        this.plane.scale.x = ((this.viewport.width * (1500 * this.scale)) / this.screen.width) * 0.95;
         this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-        this.padding = 2;
+        this.padding = 10;
         this.width = this.plane.scale.x + this.padding;
         this.widthTotal = this.width * this.length;
         this.x = this.width * this.index;
@@ -449,7 +445,15 @@ class App {
 
     constructor(
         container: HTMLElement,
-        { items, bend = 1, textColor = '#ffffff', borderRadius = 0, font = 'bold 30px Figtree', scrollSpeed = 2, scrollEase = 0.05 }: AppConfig,
+        {
+            items,
+            bend = 1,
+            textColor = '#ffffff',
+            borderRadius = 0,
+            font = 'bold 30px Figtree',
+            scrollSpeed = 2,
+            scrollEase = 0.05
+        }: AppConfig
     ) {
         document.documentElement.classList.remove('no-js');
         this.container = container;
@@ -486,60 +490,66 @@ class App {
     createGeometry() {
         this.planeGeometry = new Plane(this.gl, {
             heightSegments: 50,
-            widthSegments: 100,
+            widthSegments: 100
         });
     }
 
-    createMedias(items: { image: string; text: string }[] | undefined, bend: number = 1, textColor: string, borderRadius: number, font: string) {
+    createMedias(
+        items: { image: string; text: string }[] | undefined,
+        bend: number = 1,
+        textColor: string,
+        borderRadius: number,
+        font: string
+    ) {
         const defaultItems = [
             {
                 image: `https://picsum.photos/seed/1/800/600?grayscale`,
-                text: 'Bridge',
+                text: 'Bridge'
             },
             {
                 image: `https://picsum.photos/seed/2/800/600?grayscale`,
-                text: 'Desk Setup',
+                text: 'Desk Setup'
             },
             {
                 image: `https://picsum.photos/seed/3/800/600?grayscale`,
-                text: 'Waterfall',
+                text: 'Waterfall'
             },
             {
                 image: `https://picsum.photos/seed/4/800/600?grayscale`,
-                text: 'Strawberries',
+                text: 'Strawberries'
             },
             {
                 image: `https://picsum.photos/seed/5/800/600?grayscale`,
-                text: 'Deep Diving',
+                text: 'Deep Diving'
             },
             {
                 image: `https://picsum.photos/seed/16/800/600?grayscale`,
-                text: 'Train Track',
+                text: 'Train Track'
             },
             {
                 image: `https://picsum.photos/seed/17/800/600?grayscale`,
-                text: 'Santorini',
+                text: 'Santorini'
             },
             {
                 image: `https://picsum.photos/seed/8/800/600?grayscale`,
-                text: 'Blurry Lights',
+                text: 'Blurry Lights'
             },
             {
                 image: `https://picsum.photos/seed/9/800/600?grayscale`,
-                text: 'New York',
+                text: 'New York'
             },
             {
                 image: `https://picsum.photos/seed/10/800/600?grayscale`,
-                text: 'Good Boy',
+                text: 'Good Boy'
             },
             {
                 image: `https://picsum.photos/seed/21/800/600?grayscale`,
-                text: 'Coastline',
+                text: 'Coastline'
             },
             {
                 image: `https://picsum.photos/seed/12/800/600?grayscale`,
-                text: 'Palm Trees',
-            },
+                text: 'Palm Trees'
+            }
         ];
         const galleryItems = items && items.length ? items : defaultItems;
         this.mediasImages = galleryItems.concat(galleryItems);
@@ -558,7 +568,7 @@ class App {
                 bend,
                 textColor,
                 borderRadius,
-                font,
+                font
             });
         });
     }
@@ -601,18 +611,18 @@ class App {
     onResize() {
         this.screen = {
             width: this.container.clientWidth,
-            height: this.container.clientHeight,
+            height: this.container.clientHeight
         };
         this.renderer.setSize(this.screen.width, this.screen.height);
         this.camera.perspective({
-            aspect: this.screen.width / this.screen.height,
+            aspect: this.screen.width / this.screen.height
         });
         const fov = (this.camera.fov * Math.PI) / 180;
         const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
         const width = height * this.camera.aspect;
         this.viewport = { width, height };
         if (this.medias) {
-            this.medias.forEach((media) => media.onResize({ screen: this.screen, viewport: this.viewport }));
+            this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
         }
     }
 
@@ -620,7 +630,7 @@ class App {
         this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
         const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
         if (this.medias) {
-            this.medias.forEach((media) => media.update(this.scroll, direction));
+            this.medias.forEach(media => media.update(this.scroll, direction));
         }
         this.renderer.render({ scene: this.scene, camera: this.camera });
         this.scroll.last = this.scroll.current;
@@ -675,7 +685,7 @@ onMounted(() => {
         borderRadius: props.borderRadius,
         font: props.font,
         scrollSpeed: props.scrollSpeed,
-        scrollEase: props.scrollEase,
+        scrollEase: props.scrollEase
     });
 });
 
@@ -694,9 +704,9 @@ watch(
         borderRadius: props.borderRadius,
         font: props.font,
         scrollSpeed: props.scrollSpeed,
-        scrollEase: props.scrollEase,
+        scrollEase: props.scrollEase
     }),
-    (newProps) => {
+    newProps => {
         if (app) {
             app.destroy();
         }
@@ -704,6 +714,6 @@ watch(
             app = new App(containerRef.value, newProps);
         }
     },
-    { deep: true },
+    { deep: true }
 );
 </script>
