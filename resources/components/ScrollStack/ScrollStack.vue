@@ -197,9 +197,9 @@ const setup = () => {
     cardsRef.value = cards;
     const transformsCache = lastTransformsRef.value;
 
-    cards.forEach((card, i) => {
-        if (i < cards.length - 1) {
-            card.style.marginBottom = `${props.itemDistance}px`;
+            cards.forEach((card, i) => {
+                card.style.zIndex = (cards.length - i).toString();
+                if (i < cards.length - 1) {            card.style.marginBottom = `${props.itemDistance}px`;
         }
         card.style.willChange = 'transform, filter';
         card.style.transformOrigin = 'top center';
