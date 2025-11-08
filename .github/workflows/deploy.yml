@@ -20,6 +20,12 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
 
+      - name: Setup Laravel Environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan config:clear
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
