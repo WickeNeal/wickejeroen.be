@@ -38,6 +38,7 @@ jobs:
       - name: Setup Laravel Environment
         run: |
           cp .env.example .env
+          sed -i 's,APP_URL=http://localhost,APP_URL=https://WickeNeal.github.io/wickejeroen.be,g' .env
           php artisan key:generate
           touch database/database.sqlite
           php artisan migrate
