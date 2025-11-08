@@ -1,7 +1,7 @@
 <template>
     <section class="py-20 px-6 md:px-10 lg:px-20 bg-background-light dark:bg-background-dark" id="contact">
         <div class="mx-auto max-w-6xl">
-            <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Let's Build Together</h2>
+            <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Contacteer ons vrijblijvend</h2>
             <div class="mt-12 flex flex-col gap-12 lg:flex-row">
                 <div class="w-full lg:w-1/2">
                     <form @submit.prevent="submit" class="space-y-6">
