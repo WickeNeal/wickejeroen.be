@@ -1,40 +1,36 @@
 <template>
-    <section class="bg-background-dark/5 pt-20 pb-20" id="realisaties">
-        <div>
-            <CircularGallery
-                :items="circularGalleryItems"
-                :bend="0"
-                text-color="#ffffff"
-                :border-radius="0.05"
-                font="bold 30px Arial"
-                :scroll-speed="2"
-                :scroll-ease="0.05"
+    <section class="bg-background pt-20 pb-20" id="realisaties">
+        <div class="container mx-auto px-4">
+            <Masonry
+                :items="masonryItems"
+                :columns="3"
+                :gap="20"
             />
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
-import CircularGallery from '../../components/CircularGallery/CircularGallery.vue';
+import Masonry from '../../components/Masonry/Masonry.vue';
 import { computed } from 'vue';
 
-const basePath = import.meta.env.PROD ? '/wickejeroen.be' : '';
+const props = defineProps<{
+    projects: Array<{
+        id: number;
+        title: string;
+        slug: string;
+        cover_image_path: string;
+    }>;
+}>();
 
-const relativeImagePaths = [
-    "20170814_114439.jpg",
-    "IMG_20190828_141341 1.jpg",
-    "IMG_20191121_164606 1.jpg",
-    "IMG_20200124_134219 1.jpg",
-    "IMG_20200310_080808.jpg",
-    "IMG_20200326_112935.jpg",
-    "IMG_20210320_131124.jpg",
-];
-
-const customImages = computed(() => {
-    return relativeImagePaths.map(image => `${basePath}/images/mooiste foto's/${image}`);
-});
-
-const circularGalleryItems = computed(() => {
-    return customImages.value.map(url => ({ image: url, text: '' }));
+const masonryItems = computed(() => {
+    return props.projects.map((project) => ({
+        id: String(project.id),
+        img: '/storage/' + project.cover_image_path,
+        url: `/realisaties/${project.slug}`,
+        height: 400,
+        title: project.title,
+        label: project.title
+    }));
 });
 </script>

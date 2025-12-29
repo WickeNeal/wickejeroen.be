@@ -49,7 +49,7 @@
                         <span class="material-symbols-outlined mt-1 text-2xl text-primary">phone</span>
                         <div>
                             <h3 class="font-display text-xl font-bold uppercase tracking-wide">Telefoon</h3>
-                            <p class="text-text-light/80 dark:text-text-dark/80">-- -- -- -- -- --</p>
+                            <p class="text-text-light/80 dark:text-text-dark/80">+32 479 85 64 09</p>
                         </div>
                     </div>
                 </div>

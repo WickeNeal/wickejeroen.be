@@ -27,7 +27,10 @@
           >
             <div class="absolute inset-0 bg-black opacity-70"></div>
             <div class="h-full w-[200%] flex" :ref="el => (marqueeInnerRefs[idx] = el as HTMLDivElement)">
-              <div class="flex items-center relative h-full w-max will-change-transform animate-marquee">
+              <div 
+                class="flex items-center relative h-full w-max will-change-transform animate-marquee backface-hidden transform-gpu"
+                :ref="el => (marqueeContentRefs[idx] = el as HTMLDivElement)"
+              >
                 <template v-for="i in 2" :key="`${idx}-${i}`">
                   <div class="flex items-center justify-center p-[1vh_1vw_0] whitespace-nowrap flex-shrink-0">
                     <p class=" uppercase font-semibold text-[4vh] leading-[1.2] mr-[1vw]">
@@ -44,8 +47,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
+import { useWindowSize } from '@vueuse/core';
 
 interface MenuItemProps {
   link: string;
@@ -58,13 +62,14 @@ interface Props {
     items?: MenuItemProps[];
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     items: () => [],
 });
 
 const itemRefs = ref<(HTMLDivElement | null)[]>([]);
 const marqueeRefs = ref<(HTMLDivElement | null)[]>([]);
 const marqueeInnerRefs = ref<(HTMLDivElement | null)[]>([]);
+const marqueeContentRefs = ref<(HTMLDivElement | null)[]>([]);
 
 const animationDefaults = { duration: 0.6, ease: 'expo' };
 
@@ -80,37 +85,108 @@ const findClosestEdge = (mouseX: number, mouseY: number, width: number, height: 
     return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
 };
 
-const handleMouseEnter = (ev: MouseEvent, idx: number) => {
-    const itemRef = itemRefs.value[idx];
+const { width: windowWidth, height: windowHeight } = useWindowSize();
+
+const animateIn = (idx: number, fromTop: boolean) => {
     const marqueeRef = marqueeRefs.value[idx];
     const marqueeInnerRef = marqueeInnerRefs.value[idx];
+    const marqueeContentRef = marqueeContentRefs.value[idx];
 
-    if (!itemRef || !marqueeRef || !marqueeInnerRef) return;
+    if (!marqueeRef || !marqueeInnerRef) return;
+    
+    // Reset Marquee Animation
+    if (marqueeContentRef) {
+        marqueeContentRef.style.animation = 'none';
+        void marqueeContentRef.offsetHeight; // Trigger Reflow
+        marqueeContentRef.style.animation = ''; // Re-enable standard CSS animation
+    }
 
-    const rect = itemRef.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+    // Kill existing animations to prevent conflicts
+    gsap.killTweensOf([marqueeRef, marqueeInnerRef]);
 
     const tl = gsap.timeline({ defaults: animationDefaults });
-    tl.set(marqueeRef, { y: edge === 'top' ? '-101%' : '101%' })
-        .set(marqueeInnerRef, { y: edge === 'top' ? '101%' : '-101%' })
+    tl.set(marqueeRef, { y: fromTop ? '-101%' : '101%' })
+        .set(marqueeInnerRef, { y: fromTop ? '101%' : '-101%' })
         .to([marqueeRef, marqueeInnerRef], { y: '0%' });
 };
 
-const handleMouseLeave = (ev: MouseEvent, idx: number) => {
-    const itemRef = itemRefs.value[idx];
+const animateOut = (idx: number, fromTop: boolean) => {
     const marqueeRef = marqueeRefs.value[idx];
     const marqueeInnerRef = marqueeInnerRefs.value[idx];
+    if (!marqueeRef || !marqueeInnerRef) return;
 
-    if (!itemRef || !marqueeRef || !marqueeInnerRef) return;
-
-    const rect = itemRef.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+    // Kill existing animations
+    gsap.killTweensOf([marqueeRef, marqueeInnerRef]);
 
     const tl = gsap.timeline({ defaults: animationDefaults });
-    tl.to(marqueeRef, { y: edge === 'top' ? '-101%' : '101%' }).to(marqueeInnerRef, {
-        y: edge === 'top' ? '101%' : '-101%',
+    tl.to(marqueeRef, { y: fromTop ? '-101%' : '101%' }).to(marqueeInnerRef, {
+        y: fromTop ? '101%' : '-101%',
+    }, "<"); // Run concurrently
+};
+
+const handleMouseEnter = (ev: MouseEvent, idx: number) => {
+    if (windowWidth.value < 1024) return; // Disable hover on mobile/tablet (rely on scroll)
+    const itemRef = itemRefs.value[idx];
+    if (!itemRef) return;
+    const rect = itemRef.getBoundingClientRect();
+    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+    animateIn(idx, edge === 'top');
+};
+
+const handleMouseLeave = (ev: MouseEvent, idx: number) => {
+    if (windowWidth.value < 1024) return;
+    const itemRef = itemRefs.value[idx];
+    if (!itemRef) return;
+    const rect = itemRef.getBoundingClientRect();
+    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+    animateOut(idx, edge === 'top');
+};
+
+// Scroll Trigger Logic
+const activeItemIndex = ref(-1);
+
+const checkScroll = () => {
+    if (windowWidth.value >= 1024) return; // Only for mobile/tablet
+
+    const center = windowHeight.value / 2;
+    // Sweet spot: 15% above/below center
+    const range = windowHeight.value * 0.15; 
+
+    props.items.forEach((_, idx) => {
+        const itemRef = itemRefs.value[idx];
+        if (itemRef) {
+            const rect = itemRef.getBoundingClientRect();
+            const itemCenter = rect.top + rect.height / 2;
+            
+            // Check if item center is within sweet spot
+            if (itemCenter >= center - range && itemCenter <= center + range) {
+                if (activeItemIndex.value !== idx) {
+                    // New item calling dibs
+                    const direction = itemCenter > center ? false : true; // Determine direction roughly
+                    animateIn(idx, true); // Always slide in from top for consistency or calculate scroll dir
+                    activeItemIndex.value = idx;
+                }
+            } else if (activeItemIndex.value === idx) {
+                // Leaving sweet spot
+                animateOut(idx, true);
+                activeItemIndex.value = -1;
+            }
+        }
     });
 };
+
+// Use simple RAF loop or scroll listener for performance
+// Since useWindowScroll is reactive, we can watch it or just use a standard listener
+let scrollCleanup: (() => void) | null = null;
+
+onMounted(() => {
+    scrollCleanup = () => window.removeEventListener('scroll', checkScroll);
+    window.addEventListener('scroll', checkScroll, { passive: true });
+});
+
+onUnmounted(() => {
+    if (scrollCleanup) scrollCleanup();
+});
 </script>
 
 <style scoped>
@@ -126,5 +202,15 @@ const handleMouseLeave = (ev: MouseEvent, idx: number) => {
 
 .animate-marquee {
     animation: marquee 15s linear infinite;
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.transform-gpu {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 </style>

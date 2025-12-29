@@ -15,16 +15,12 @@
                 :active-color="dotGridActiveColor"
             />
         </div>
-        <div class="relative z-10 flex w-full flex-col items-start justify-center gap-6 p-6 text-left lg:w-1/2 lg:p-20">
+        <div class="relative z-10 flex w-full flex-1 flex-col items-center justify-center gap-6 p-6 pt-32 text-center lg:p-20">
             <h1 class="font-display text-5xl font-bold uppercase leading-tight tracking-wide text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">
                 Kwaliteit Vakmanschap, Blijvende resultaten
             </h1>
-            <p class="font-semibold text-lg text-text-light/80 dark:text-text-dark/80">
+            <p class="font-semibold text-lg text-text-light/80 dark:text-text-dark/80 max-w-2xl">
                 Met meer dan 15 jaar ervaring in de bouwsector staan we garant voor kwaliteit en betrouwbaarheid. Onze missie? Uw visie omzetten in realiteit, met oog voor detail en duurzaamheid.            </p>
-        </div>
-        <div class="relative z-10 h-96 w-full lg:h-auto lg:w-1/2">
-            <div class="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('images/Wicke Jeroen logo/6-big.png');"></div>
-            <div class="absolute inset-0 bg-background-dark/20 dark:bg-background-dark/40"></div>
         </div>
     </section>
 </template>

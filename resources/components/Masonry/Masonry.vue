@@ -3,7 +3,7 @@
 -->
 
 <template>
-    <div ref="containerRef" class="relative h-full w-full">
+    <div ref="containerRef" class="relative w-full" :style="{ height: `${containerHeight}px` }">
         <div
             v-for="item in grid"
             :key="item.id"
@@ -16,7 +16,7 @@
         >
             <div
                 class="relative h-full w-full rounded-[10px] bg-cover bg-center text-[10px] leading-[10px] uppercase shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)]"
-                :style="{ backgroundImage: `url(${item.img})` }"
+                :style="{ backgroundImage: `url('${item.img}')` }"
             >
                 <div
                     v-if="colorShiftOnHover"
@@ -128,9 +128,14 @@ const grid = computed(() => {
     const totalGaps = (columns.value - 1) * gap;
     const columnWidth = (size.value.width - totalGaps) / columns.value;
 
+    // Calculate effective columns used (prevent left-alignment for few items)
+    const effectiveColumns = Math.min(columns.value, props.items.length);
+    const contentWidth = effectiveColumns * columnWidth + Math.max(0, effectiveColumns - 1) * gap;
+    const offsetX = (size.value.width - contentWidth) / 2;
+
     return props.items.map((child) => {
         const col = colHeights.indexOf(Math.min(...colHeights));
-        const x = col * (columnWidth + gap);
+        const x = col * (columnWidth + gap) + offsetX;
         const height = child.height / 2;
         const y = colHeights[col];
 
@@ -140,7 +145,12 @@ const grid = computed(() => {
 });
 
 const openUrl = (url: string) => {
-    window.open(url, '_blank', 'noopener');
+    // Check if it's an internal link (begins with /)
+    if (url.startsWith('/')) {
+        window.location.href = url;
+    } else {
+        window.open(url, '_blank', 'noopener');
+    }
 };
 
 interface GridItem extends Item {
@@ -213,6 +223,8 @@ watchEffect(() => {
     });
 });
 
+const containerHeight = ref(0);
+
 watchEffect(() => {
     if (!imagesReady.value) return;
 
@@ -222,6 +234,10 @@ watchEffect(() => {
     void size.value.width;
 
     if (!currentGrid.length) return;
+
+    // Calculate max height
+    const maxY = Math.max(...currentGrid.map(item => item.y + item.h));
+    containerHeight.value = maxY;
 
     nextTick(() => {
         currentGrid.forEach((item, index) => {

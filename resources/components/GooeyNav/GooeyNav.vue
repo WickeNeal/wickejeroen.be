@@ -22,7 +22,7 @@
                             :href="item.href || undefined"
                             @click="(e) => handleClick(e, index)"
                             @keydown="(e) => handleKeyDown(e, index)"
-                            class="inline-block px-[1em] py-[0.6em] outline-none"
+                            class="inline-block px-[1em] py-[0.6em] outline-none text-black font-semibold"
                         >
                             {{ item.label }}
                         </a>
@@ -30,19 +30,13 @@
                 </ul>
             </nav>
 
-            <span class="effect filter" ref="filterRef" />
-
-            <span class="effect text" ref="textRef" />
+            <!-- Removed effect spans to prevent double text glitch -->
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-
-gsap.registerPlugin(ScrollToPlugin);
 
 interface GooeyNavItem {
     label: string;
@@ -72,108 +66,18 @@ const props = withDefaults(defineProps<GooeyNavProps>(), {
 
 const containerRef = useTemplateRef<HTMLDivElement>('containerRef');
 const navRef = useTemplateRef<HTMLUListElement>('navRef');
-const filterRef = useTemplateRef<HTMLSpanElement>('filterRef');
-const textRef = useTemplateRef<HTMLSpanElement>('textRef');
 
-let resizeObserver: ResizeObserver | null = null;
-
-const noise = (n = 1) => n / 2 - Math.random() * n;
-
-const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
-  const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
-  return [distance * Math.cos(angle), distance * Math.sin(angle)];
-};
-
-const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-  const rotate = noise(r / 10);
-  return {
-    start: getXY(d[0], props.particleCount - i, props.particleCount),
-    end: getXY(d[1] + noise(7), props.particleCount - i, props.particleCount),
-    time: t,
-    scale: 1 + noise(0.2),
-    color: props.colors[Math.floor(Math.random() * props.colors.length)],
-    rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10
-  };
-};
-
-const makeParticles = (element: HTMLElement) => {
-  const d: [number, number] = props.particleDistances;
-  const r = props.particleR;
-  const bubbleTime = props.animationTime * 2 + props.timeVariance;
-  element.style.setProperty('--time', `${bubbleTime}ms`);
-  for (let i = 0; i < props.particleCount; i++) {
-    const t = props.animationTime * 2 + noise(props.timeVariance * 2);
-    const p = createParticle(i, t, d, r);
-    element.classList.remove('active');
-    setTimeout(() => {
-      const particle = document.createElement('span');
-      const point = document.createElement('span');
-      particle.classList.add('particle');
-      particle.style.setProperty('--start-x', `${p.start[0]}px`);
-      particle.style.setProperty('--start-y', `${p.start[1]}px`);
-      particle.style.setProperty('--end-x', `${p.end[0]}px`);
-      particle.style.setProperty('--end-y', `${p.end[1]}px`);
-      particle.style.setProperty('--time', `${p.time}ms`);
-      particle.style.setProperty('--scale', `${p.scale}`);
-      particle.style.setProperty('--color', `var(--color-${p.color}, white)`);
-      particle.style.setProperty('--rotate', `${p.rotate}deg`);
-      point.classList.add('point');
-      particle.appendChild(point);
-      element.appendChild(particle);
-      requestAnimationFrame(() => {
-        element.classList.add('active');
-      });
-      setTimeout(() => {
-        try {
-          element.removeChild(particle);
-        } catch {}
-      }, t);
-    }, 30);
-  }
-};
-
-const updateEffectPosition = (element: HTMLElement) => {
-  if (!containerRef.value || !filterRef.value || !textRef.value) return;
-  const containerRect = containerRef.value.getBoundingClientRect();
-  const pos = element.getBoundingClientRect();
-  const styles = {
-    left: `${pos.x - containerRect.x}px`,
-    top: `${pos.y - containerRect.y}px`,
-    width: `${pos.width}px`,
-    height: `${pos.height}px`
-  };
-  Object.assign(filterRef.value.style, styles);
-  Object.assign(textRef.value.style, styles);
-  textRef.value.innerText = element.innerText;
-};
 
 const handleClick = (e: Event, index: number) => {
   e.preventDefault(); // Prevent default link behavior
 
-  const liEl = (e.currentTarget as HTMLElement).parentElement as HTMLElement;
-  // activeIndex.value = index; // Removed this line as activeIndex is now controlled by prop
-  updateEffectPosition(liEl);
-  if (filterRef.value) {
-    const particles = filterRef.value.querySelectorAll('.particle');
-    particles.forEach(p => filterRef.value!.removeChild(p));
-  }
-  if (textRef.value) {
-    textRef.value.classList.remove('active');
-    void textRef.value.offsetWidth;
-    textRef.value.classList.add('active');
-  }
-  if (filterRef.value) {
-    makeParticles(filterRef.value);
-  }
-
   // Get the target href from the item
   const targetHref = props.items[index].href;
   if (targetHref && targetHref.startsWith('#')) {
-    gsap.to(window, {
-      duration: 1, // Animation duration in seconds
-      scrollTo: targetHref, // Scroll to the target element
-      ease: 'power2.out' // Exponential easing: starts slow, accelerates
-    });
+    const targetElement = document.querySelector(targetHref);
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
   } else if (targetHref) {
     // If it's not a hash link, just navigate normally
     window.location.href = targetHref;
@@ -195,39 +99,9 @@ const handleKeyDown = (e: KeyboardEvent, index: number) => {
   }
 };
 
-watch(() => props.activeIndex, (newIndex) => { // Watch the prop directly
-  if (!navRef.value || !containerRef.value) return;
-  const activeLi = navRef.value.querySelectorAll('li')[newIndex] as HTMLElement;
-  if (activeLi) {
-    updateEffectPosition(activeLi);
-    textRef.value?.classList.add('active');
-  }
-});
-
-onMounted(() => {
-  if (!navRef.value || !containerRef.value) return;
-  const activeLi = navRef.value.querySelectorAll('li')[props.activeIndex] as HTMLElement;
-  if (activeLi) {
-    updateEffectPosition(activeLi);
-    textRef.value?.classList.add('active');
-  }
-  resizeObserver = new ResizeObserver(() => {
-    const currentActiveLi = navRef.value?.querySelectorAll('li')[props.activeIndex] as HTMLElement;
-    if (currentActiveLi) {
-      updateEffectPosition(currentActiveLi);
-    }
-  });
-  resizeObserver.observe(containerRef.value);
-});
-
-onUnmounted(() => {
-  if (resizeObserver) {
-    resizeObserver.disconnect();
-  }
-});
 </script>
 
-<style>
+<style scoped>
 :root {
     --linear-ease: linear(
         0,
@@ -376,25 +250,27 @@ onUnmounted(() => {
     }
 }
 
-li.active {
-    color: black;
-    text-shadow: none;
-}
-
-li.active::after {
-    opacity: 1;
-    transform: scale(1);
-}
-
-li::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 8px;
+li {
     background: white;
-    opacity: 0;
-    transform: scale(0);
+    color: black;
+    border-radius: 9999px;
     transition: all 0.3s ease;
-    z-index: -1;
+    text-shadow: none; /* Ensure no white shadow on black text */
+    overflow: hidden; /* For potential ripple/gooey containment */
+    z-index: 10;
+}
+
+li:hover {
+    transform: scale(1.1);
+}
+
+li.active {
+    border-radius: 8px; /* "Less" border radius */
+    color: black;
+}
+
+/* Remove old pseudo-elements used for the 'single active blob' effect if we want all to be buttons */
+li::after {
+    display: none;
 }
 </style>
