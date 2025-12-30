@@ -4,11 +4,19 @@
             <div class="flex items-center gap-6">
                 <div class="group relative">
                     <p class="text-sm text-text-light/70 dark:text-text-dark/70 cursor-pointer">
-                        Website door <span class="text-primary font-semibold underline decoration-primary/30 underline-offset-4 group-hover:decoration-primary transition-all">Neal Wicke</span> © 2025. All Rights Reserved.
+                        <span 
+                            class="text-primary font-semibold underline decoration-primary/30 underline-offset-4 group-hover:decoration-primary transition-all"
+                            @click="toggleEasterEgg"
+                        >
+                            Neal Wicke
+                        </span> © 2025. All Rights Reserved.
                     </p>
 
                     <!-- Hover Card -->
-                    <div class="absolute bottom-full right-0 mb-6 w-72 translate-y-4 opacity-0 invisible transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible z-50">
+                    <div 
+                        class="absolute bottom-full right-0 mb-6 w-72 translate-y-4 opacity-0 invisible transition-all duration-300 ease-out z-50 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible"
+                        :class="{'!opacity-100 !visible !translate-y-0': showEasterEgg}"
+                    >
                         <div class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-5 border border-zinc-100 dark:border-zinc-800 ring-1 ring-black/5">
                              <!-- Arrow -->
                              <div class="absolute -bottom-2 right-12 h-4 w-4 rotate-45 bg-white dark:bg-zinc-900 border-b border-r border-zinc-100 dark:border-zinc-800"></div>
@@ -58,4 +66,11 @@
     </footer>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const showEasterEgg = ref(false);
+
+const toggleEasterEgg = () => {
+    showEasterEgg.value = !showEasterEgg.value;
+};
 </script>
