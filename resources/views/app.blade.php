@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="Wicke Jeroen - Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien in regio Ieper en omstreken.">
+        content="Wicke Jeroen - Uw aannemer voor totaalrenovaties, terrassen, vloeren, badkamers en algemene bouwwerken in regio Ieper en West-Vlaanderen.">
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.wickejeroen.be">
-    <meta property="og:title" content="Wicke Jeroen - Algemene Bouwwerken">
+    <meta property="og:title" content="Wicke Jeroen - Algemene Bouwwerken & Renovaties">
     <meta property="og:description"
-        content="Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien. Kwaliteit en vertrouwen staan centraal.">
+        content="Specialist in totaalrenovaties, terrassen, vloeren en badkamers. Van kleine werken tot grote projecten in regio Ieper.">
     <meta property="og:image" content="https://www.wickejeroen.be/images/flow-menu/totaalrenovaties.jpg">
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
@@ -30,7 +30,7 @@
       "@type": "GeneralContractor",
       "name": "Wicke Jeroen",
       "image": "https://www.wickejeroen.be/images/flow-menu/totaalrenovaties.jpg",
-      "description": "Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien in regio Ieper.",
+      "description": "Uw partner voor totaalrenovaties, terrassen, vloeren, badkamers en algemene bouwwerken in regio Ieper.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Koolmeeslaan 15",

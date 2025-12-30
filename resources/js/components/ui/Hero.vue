@@ -16,12 +16,11 @@
             />
         </div>
         <div class="relative z-10 flex w-full flex-1 flex-col items-center justify-center gap-6 p-6 pt-32 text-center lg:p-20">
-            <h1 class="font-display text-4xl font-bold uppercase leading-tight tracking-wide text-text-light dark:text-text-dark md:text-5xl lg:text-7xl">
-                Specialist in Totaalrenovaties & Algemene Bouwwerken
+            <h1 class="font-display text-5xl font-bold uppercase leading-tight tracking-wide text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">
+                Kwaliteit Vakmanschap, Blijvende resultaten
             </h1>
             <p class="font-semibold text-lg text-text-light/80 dark:text-text-dark/80 max-w-2xl">
-                Van ruwbouw tot verfijnde afwerking. Uw betrouwbare aannemer voor regio Ieper en heel West-Vlaanderen. Kwaliteit waar u op kunt bouwen.
-            </p>
+                Met meer dan 15 jaar ervaring in de bouwsector staan we garant voor kwaliteit en betrouwbaarheid. Onze missie? Uw visie omzetten in realiteit, met oog voor detail en duurzaamheid.            </p>
         </div>
     </section>
 </template>
