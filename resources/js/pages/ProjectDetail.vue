@@ -1,6 +1,11 @@
 ```vue
 <template>
     <PublicLayout :show-header="false">
+        <!-- Floating Logo Home Link -->
+        <a href="/" class="fixed top-4 left-1/2 -translate-x-1/2 md:top-6 z-50 transition-transform hover:scale-105">
+            <img src="/images/Wicke Jeroen logo/6.png" alt="Wicke Jeroen" class="h-20 w-auto object-contain drop-shadow-md">
+        </a>
+        
         <div class="bg-background min-h-screen pt-32 pb-20">
             <div class="container mx-auto px-4">
                 <div v-if="project">

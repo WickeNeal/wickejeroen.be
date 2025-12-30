@@ -4,6 +4,9 @@
             <h2 class="text-center font-display text-4xl font-bold uppercase tracking-wider text-text-light dark:text-primary md:text-5xl">Contacteer ons vrijblijvend</h2>
             <div class="mt-12 flex flex-col gap-12 lg:flex-row">
                 <div class="w-full lg:w-1/2">
+                    <div v-if="page.props.flash?.success" class="mb-6 rounded-lg bg-green-500/10 border border-green-500/20 p-4 text-green-500">
+                        {{ page.props.flash?.success }}
+                    </div>
                     <form @submit.prevent="submit" class="space-y-6">
                         <div>
                             <label class="sr-only" for="name">Naam</label>
@@ -58,7 +61,19 @@
     </section>
 </template>
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3'
+import { useForm, usePage } from '@inertiajs/vue3';
+import { PageProps as InertiaPageProps } from '@inertiajs/core';
+
+declare function route(name: string): string;
+
+interface PageProps extends InertiaPageProps {
+    flash: {
+        success?: string;
+    };
+}
+
+const page = usePage<PageProps>();
+
 
 const form = useForm({
     name: '',

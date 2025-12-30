@@ -17,8 +17,17 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        Mail::to('contact@jeroenwicke.com')->send(new ContactFormMail($validated));
+        // Save to Database first (Reliability)
+        \App\Models\ContactMessage::create($validated);
 
-        return redirect()->back()->with('success', 'Thank you for your message. We will get back to you soon.');
+        // Try to send email (Best effort)
+        try {
+            Mail::to('info@wickejeroen.be')->send(new ContactFormMail($validated));
+        } catch (\Exception $e) {
+            // Log error but don't fail the request since DB save worked
+            \Illuminate\Support\Facades\Log::error('Mail send failed: ' . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Bedankt! Uw bericht is goed ontvangen. We nemen snel contact met u op.');
     }
 }

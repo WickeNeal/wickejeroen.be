@@ -20,6 +20,7 @@ defineProps<{
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold uppercase tracking-widest text-[#B5A58D]">Dashboard</h1>
                 <div class="flex items-center gap-4">
+                    <Link href="/admin/messages" class="text-sm text-gray-400 hover:text-white hover:underline mr-4">Messages</Link>
                     <span class="text-sm text-gray-400">Welcome, Admin</span>
                     <Link
                         href="/admin/logout"

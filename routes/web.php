@@ -34,4 +34,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // Project Routes
     Route::resource('projects', App\Http\Controllers\Admin\ProjectController::class)->except(['show']);
     Route::delete('/projects/{project}/images/{image}', [App\Http\Controllers\Admin\ProjectController::class, 'destroyImage'])->name('projects.images.destroy');
+
+    // Message Routes
+    Route::get('/messages', [App\Http\Controllers\Admin\MessageController::class, 'index'])->name('admin.messages.index');
+    Route::delete('/messages/{message}', [App\Http\Controllers\Admin\MessageController::class, 'destroy'])->name('admin.messages.destroy');
 });
