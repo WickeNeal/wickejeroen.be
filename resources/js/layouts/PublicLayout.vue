@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     showHeader?: boolean;
 }>(), {
     showHeader: true
@@ -25,7 +25,7 @@ const sectionIds = ['home', 'diensten', 'realisaties', 'contact'];
 
 const handleScroll = () => {
     const scrollY = window.scrollY;
-    const offset = 100; // Adjust this value as needed for better active state detection
+
 
     // Explicitly handle "at the top" case to avoid sticking
     if (scrollY < 50) {

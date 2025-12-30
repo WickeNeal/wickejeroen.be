@@ -162,7 +162,7 @@ const checkScroll = () => {
             if (itemCenter >= center - range && itemCenter <= center + range) {
                 if (activeItemIndex.value !== idx) {
                     // New item calling dibs
-                    const direction = itemCenter > center ? false : true; // Determine direction roughly
+                    // New item calling dibs
                     animateIn(idx, true); // Always slide in from top for consistency or calculate scroll dir
                     activeItemIndex.value = idx;
                 }

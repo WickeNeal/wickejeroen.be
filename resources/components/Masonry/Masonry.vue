@@ -10,7 +10,7 @@
             :data-key="item.id"
             class="absolute box-content"
             :style="{ willChange: 'transform, width, height, opacity' }"
-            @click="openUrl(item.url)"
+            @click="handleClick(item)"
             @mouseenter="(e) => handleMouseEnter(item.id, e.currentTarget as HTMLElement)"
             @mouseleave="(e) => handleMouseLeave(item.id, e.currentTarget as HTMLElement)"
         >
@@ -86,8 +86,12 @@ const useMeasure = () => {
         if (!containerRef.value) return;
 
         resizeObserver = new ResizeObserver(([entry]) => {
-            const { width, height } = entry.contentRect;
-            size.value = { width, height };
+            // Debounce slightly with rAF to prevent thrashing
+            requestAnimationFrame(() => {
+                const { width, height } = entry.contentRect;
+                 // Ensure stability
+                size.value = { width: Math.floor(width), height: Math.floor(height) };
+            });
         });
 
         resizeObserver.observe(containerRef.value);
@@ -135,21 +139,28 @@ const grid = computed(() => {
 
     return props.items.map((child) => {
         const col = colHeights.indexOf(Math.min(...colHeights));
-        const x = col * (columnWidth + gap) + offsetX;
-        const height = child.height / 2;
-        const y = colHeights[col];
+        const x = Math.floor(col * (columnWidth + gap) + offsetX);
+        const height = Math.floor(child.height / 2);
+        const y = Math.floor(colHeights[col]);
 
         colHeights[col] += height + gap;
-        return { ...child, x, y, w: columnWidth, h: height };
+        return { ...child, x, y, w: Math.floor(columnWidth), h: height };
     });
 });
 
-const openUrl = (url: string) => {
-    // Check if it's an internal link (begins with /)
-    if (url.startsWith('/')) {
-        window.location.href = url;
-    } else {
-        window.open(url, '_blank', 'noopener');
+const emit = defineEmits<{
+    (e: 'item-click', item: Item): void;
+}>();
+
+const handleClick = (item: Item) => {
+    emit('item-click', item);
+    if (item.url) {
+        // Check if it's an internal link (begins with /)
+        if (item.url.startsWith('/')) {
+            window.location.href = item.url;
+        } else {
+            window.open(item.url, '_blank', 'noopener');
+        }
     }
 };
 
@@ -263,6 +274,7 @@ watchEffect(() => {
                         duration: 0.8,
                         ease: 'power3.out',
                         delay: index * props.stagger,
+                        force3D: true, // Prevent sub-pixel jitter
                     },
                 );
             } else {
