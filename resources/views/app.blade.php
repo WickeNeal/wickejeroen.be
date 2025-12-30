@@ -26,20 +26,20 @@
     <!-- Structured Data (JSON-LD) for Local SEO -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "GeneralContractor",
+      "@@context": "https://schema.org",
+      "@@type": "GeneralContractor",
       "name": "Wicke Jeroen",
       "image": "https://www.wickejeroen.be/images/flow-menu/totaalrenovaties.jpg",
       "description": "Uw partner voor totaalrenovaties, terrassen, vloeren, badkamers en algemene bouwwerken in regio Ieper.",
       "address": {
-        "@type": "PostalAddress",
+        "@@type": "PostalAddress",
         "streetAddress": "Koolmeeslaan 15",
         "addressLocality": "Ieper",
         "postalCode": "8900",
         "addressCountry": "BE"
       },
       "geo": {
-        "@type": "GeoCoordinates",
+        "@@type": "GeoCoordinates",
         "latitude": 50.8503,
         "longitude": 2.8846
       },
