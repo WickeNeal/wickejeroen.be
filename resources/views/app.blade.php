@@ -4,6 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Wicke Jeroen - Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien in regio Ieper en omstreken.">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wickejeroen.be">
+    <meta property="og:title" content="Wicke Jeroen - Algemene Bouwwerken">
+    <meta property="og:description"
+        content="Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien. Kwaliteit en vertrouwen staan centraal.">
+    <meta property="og:image" content="https://www.wickejeroen.be/images/flow-menu/totaalrenovaties.jpg">
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -12,6 +22,33 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Structured Data (JSON-LD) for Local SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GeneralContractor",
+      "name": "Wicke Jeroen",
+      "image": "https://www.wickejeroen.be/images/flow-menu/totaalrenovaties.jpg",
+      "description": "Uw partner voor totaalrenovaties, algemene bouwwerken en kleine karweien in regio Ieper.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Koolmeeslaan 15",
+        "addressLocality": "Ieper",
+        "postalCode": "8900",
+        "addressCountry": "BE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 50.8503,
+        "longitude": 2.8846
+      },
+      "url": "https://www.wickejeroen.be",
+      "telephone": "+32479856409",
+      "areaServed": "West-Vlaanderen",
+      "priceRange": "$$"
+    }
+    </script>
     <link
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800;900&amp;family=Montserrat:wght@400;700&amp;family=Oswald:wght@700&amp;display=swap"
         rel="stylesheet">

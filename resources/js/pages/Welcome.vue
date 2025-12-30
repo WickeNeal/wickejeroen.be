@@ -1,4 +1,5 @@
 <template>
+    <Head title="Algemene Bouwwerken" />
     <PublicLayout>
         <Hero />
         <Services />
@@ -8,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3';
 import PublicLayout from "@/layouts/PublicLayout.vue";
 import Hero from "@/components/ui/Hero.vue";
 import Services from "@/components/Services.vue";
