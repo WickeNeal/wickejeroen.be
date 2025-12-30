@@ -29,3 +29,5 @@ yarn-error.log
 # Static site export directory
 /dist
 
+/database/database.sqlite
+/database/*.sqlite*
