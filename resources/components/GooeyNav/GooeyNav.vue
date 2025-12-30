@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
+import { useTemplateRef } from 'vue';
 
 interface GooeyNavItem {
     label: string;
@@ -149,13 +149,7 @@ const handleKeyDown = (e: KeyboardEvent, index: number) => {
     color: black;
 }
 
-.effect.filter {
-  /* Removed filter and mix-blend-mode to eliminate the gooey effect */
-}
 
-.effect.filter::before {
-  /* Removed to eliminate the black background contributing to the gooey effect */
-}
 .effect.filter::after {
     content: '';
     position: absolute;

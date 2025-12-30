@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, useTemplateRef, watchEffect, type Ref } from 'vue';
+import { onMounted, onUnmounted, useTemplateRef, watchEffect } from 'vue';
 import { gsap } from 'gsap';
 
 interface Props {

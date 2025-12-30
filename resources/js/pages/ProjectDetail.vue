@@ -73,7 +73,7 @@ const lightboxOpen = ref(false);
 const currentImageIndex = ref(0);
 const lightboxContainer = ref<HTMLElement | null>(null);
 
-const { direction, isSwiping } = useSwipe(lightboxContainer, {
+useSwipe(lightboxContainer, {
     onSwipeEnd(e: TouchEvent, direction: string) {
         if (direction === 'LEFT') nextImage();
         if (direction === 'RIGHT') prevImage();
