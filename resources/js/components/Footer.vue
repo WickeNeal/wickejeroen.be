@@ -4,7 +4,7 @@
             <div class="flex items-center gap-6">
                 <div class="group relative">
                     <p class="text-sm text-text-light/70 dark:text-text-dark/70 cursor-pointer">
-                        <span 
+                        Website door <span 
                             class="text-primary font-semibold underline decoration-primary/30 underline-offset-4 group-hover:decoration-primary transition-all"
                             @click="toggleEasterEgg"
                         >
